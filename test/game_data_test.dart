@@ -14,4 +14,21 @@ void main() {
         startsWith('<p>One of the most popular games of the 2010s');
     expect(gameDescription, expected);
   });
+
+  test('i can get the name of a game from a json object', () {
+    final gameDescription = decodedJsonObject['name'];
+    final expected = startsWith('Minecraft');
+    expect(gameDescription, expected);
+  });
+
+  test('i can get the rating of a game from a json object', () {
+    final gameDescription = decodedJsonObject['metacritic'];
+    expect(gameDescription, 83);
+  });
+
+  test('i can get the release date of a game from a json object', () {
+    final gameDescription = decodedJsonObject['released'];
+    final expected = startsWith("2009-05-10");
+    expect(gameDescription, expected);
+  });
 }
