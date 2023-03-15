@@ -1,26 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
-import 'package:test/test.dart';
-import 'package:http/http.dart' as http;
 
-String? siteInfo;
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  String minecraftInfo = '';
-  File('test/minecraft.json').readAsString().then((String contents) {
-    minecraftInfo = contents;
-  });
-  print(minecraftInfo);
+  final testFile = File('test/minecraft.json');
+  final stringData = testFile.readAsStringSync();
+  final decodedJsonObject = jsonDecode(stringData);
 
-  test('siteinfo returns correctly', () {
-    _getSiteInfo();
-    expect(minecraftInfo, siteInfo);
+  test('i can get the description of a game from a json object', () {
+    final gameDescription = decodedJsonObject['description'];
+    final expected =
+        startsWith('<p>One of the most popular games of the 2010s');
+    expect(gameDescription, expected);
   });
-}
-
-void _getSiteInfo() async {
-  final url = 'https://api.rawg.io/api/games/minecraft?key=';
-  final response = await http.get(Uri.parse(url));
-  siteInfo = response.body;
-  print(siteInfo);
 }
