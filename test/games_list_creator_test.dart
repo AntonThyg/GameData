@@ -8,10 +8,10 @@ void main() {
   final stringData = testFile.readAsStringSync();
   final decodedJsonObject = jsonDecode(stringData);
 
-  test('i can get the first name from the list of upcoming games', () {
+  test('i can get the first slug from the list of upcoming games', () {
     GameListCreator gameListCreator = GameListCreator();
-    var gameList = gameListCreator.createListOfNames(decodedJsonObject);
-    var firstName = decodedJsonObject["results"][0]["name"];
-    expect(gameList[0], firstName);
+    var gameList = gameListCreator.createListOfSlugs(decodedJsonObject);
+    var firstSlug = decodedJsonObject["results"][0]["slug"];
+    expect(gameList[0], firstSlug);
   });
 }
