@@ -7,7 +7,7 @@ class GameListCreator {
     List listOfGameNames = [];
     final numberOfGames = parsedJsonData['results'].length;
     for (int i = 0; i < numberOfGames; i++) {
-      String name = parsedJsonData['results'][i]['name'];
+      String name = parsedJsonData['results'][i]['slug'];
       listOfGameNames.add(name);
     }
     return listOfGameNames;
