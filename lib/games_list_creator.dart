@@ -3,14 +3,14 @@ import 'package:game_data/json_parser.dart';
 import 'package:game_data/network_access.dart';
 
 class GameListCreator {
-  List createListOfNames(var parsedJsonData) {
-    List listOfGameNames = [];
+  List createListOfSlugs(var parsedJsonData) {
+    List listOfGameSlugs = [];
     final numberOfGames = parsedJsonData['results'].length;
     for (int i = 0; i < numberOfGames; i++) {
-      String name = parsedJsonData['results'][i]['slug'];
-      listOfGameNames.add(name);
+      String slug = parsedJsonData['results'][i]['slug'];
+      listOfGameSlugs.add(slug);
     }
-    return listOfGameNames;
+    return listOfGameSlugs;
   }
 
   Future<List<Game>> createListOfGames(var listOfNames) async {
@@ -37,18 +37,5 @@ class GameListCreator {
       listOfGames.add(game);
     }
     return listOfGames;
-  }
-}
-
-Future<void> main() async {
-  GameListCreator gameListCreator = GameListCreator();
-  NetworkAccess networkAccess = NetworkAccess();
-  var url = networkAccess.queryUpcoming();
-  var names =
-      gameListCreator.createListOfNames(await JsonParser().parseJson(url));
-  var games = await gameListCreator.createListOfGames(names);
-
-  for (Game g in games) {
-    print(g.name);
   }
 }
