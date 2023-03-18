@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_data/game.dart';
 import 'package:game_data/games_list_creator.dart';
 import 'package:game_data/json_parser.dart';
 import 'package:game_data/network_access.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '10 Soonest Releasing Games',
+      title: '10 Soonest Upcoming Games',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
         canvasColor: Colors.white,
@@ -35,22 +36,29 @@ class _GameDataWidgetState extends State<GameDataWidget> {
   final gameListCreator = GameListCreator();
   final networkAccess = NetworkAccess();
 
-  String imageUrl = '';
-  String name = '';
-  String description = '';
-  String releaseDate = '';
-  String rating = '';
+  List<Game> upcomingGamesList = [];
 
   @override
   Widget build(BuildContext context) {
-    makeUpcomingGameList();
-    return Column(children: [
-      Image.network(imageUrl),
-      Text(name),
-      Text(description),
-      Text(releaseDate),
-      Text(rating),
+    final widgetList = makeWidgetList();
+    return ListView(padding: const EdgeInsets.all(8), children: [
+      for (Widget w in widgetList) Expanded(child: w),
     ]);
+  }
+
+  List<Widget> makeWidgetList() {
+    makeUpcomingGameList();
+
+    return List.generate(
+        10,
+        (index) => Column(
+              children: [
+                Image.network(upcomingGamesList[index].imageUrl),
+                Text(upcomingGamesList[index].name),
+                Text(upcomingGamesList[index].description),
+                Text(upcomingGamesList[index].releaseDate.toString()),
+              ],
+            ));
   }
 
   Future<void> makeUpcomingGameList() async {
@@ -61,15 +69,10 @@ class _GameDataWidgetState extends State<GameDataWidget> {
     List upcomingSlugs = gameListCreator
         .createListOfSlugs(await JsonParser().parseJson(upcomingGamesUrl));
 
-    List upcomingGamesList =
+    List<Game> upcomingGames =
         await gameListCreator.createListOfGames(upcomingSlugs);
-
     setState(() {
-      imageUrl = upcomingGamesList[1].imageUrl;
-      name = upcomingGamesList[1].name;
-      description = upcomingGamesList[1].description;
-      releaseDate = upcomingGamesList[1].releaseDate.toString();
-      rating = upcomingGamesList[1].rating.toString();
+      upcomingGamesList = upcomingGames;
     });
   }
 }
