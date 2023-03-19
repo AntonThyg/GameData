@@ -30,7 +30,13 @@ class GameListCreator {
         rating = jsonData["metacritic"];
       }
       DateTime releaseDate = DateTime.parse(jsonData["released"]);
-      String imageUrl = jsonData["background_image"];
+      String imageUrl = '';
+      if (jsonData["background_image"] == null) {
+        imageUrl =
+            'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg';
+      } else {
+        imageUrl = jsonData["background_image"];
+      }
 
       Game game = Game(name, description, rating, releaseDate, imageUrl);
 
