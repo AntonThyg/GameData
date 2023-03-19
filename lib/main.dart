@@ -33,30 +33,36 @@ class GameDataWidget extends StatefulWidget {
 }
 
 class _GameDataWidgetState extends State<GameDataWidget> {
-  final gameListCreator = GameListCreator();
-  final networkAccess = NetworkAccess();
-
   List<Game> upcomingGamesList = [];
 
   @override
   Widget build(BuildContext context) {
     final widgetList = makeWidgetList();
     return ListView(padding: const EdgeInsets.all(8), children: [
-      for (Widget w in widgetList) Expanded(child: w),
+      for (Widget w in widgetList) w,
     ]);
   }
 
   List<Widget> makeWidgetList() {
     makeUpcomingGameList();
 
+    if (upcomingGamesList.isNotEmpty) {
+      return List.generate(
+          10,
+          (index) => Column(
+                children: [
+                  Image.network(upcomingGamesList[index].imageUrl),
+                  Text(upcomingGamesList[index].name),
+                  Text(upcomingGamesList[index].description),
+                  Text(upcomingGamesList[index].releaseDate.toString()),
+                ],
+              ));
+    }
     return List.generate(
-        10,
+        1,
         (index) => Column(
-              children: [
-                Image.network(upcomingGamesList[index].imageUrl),
-                Text(upcomingGamesList[index].name),
-                Text(upcomingGamesList[index].description),
-                Text(upcomingGamesList[index].releaseDate.toString()),
+              children: const [
+                Text('Loading data...'),
               ],
             ));
   }
