@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
-import 'package:game_data/games_list_creator.dart';
+import 'package:game_data/list_creator.dart';
 import 'package:game_data/json_parser.dart';
 import 'package:game_data/network_access.dart';
 
