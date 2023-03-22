@@ -68,15 +68,15 @@ class _GameDataWidgetState extends State<GameDataWidget> {
   }
 
   Future<void> makeUpcomingGameList() async {
-    final gameListCreator = ListCreator();
-    final networkAccess = UrlCreator();
-    final upcomingGamesUrl = networkAccess.createUpcomingGamesQueryUrl();
+    final listCreator = ListCreator();
+    final urlCreator = UrlCreator();
+    final upcomingGamesUrl = urlCreator.createUpcomingGamesQueryUrl();
 
-    List upcomingSlugs = gameListCreator.createListOfSlugs(
+    List upcomingSlugs = listCreator.createListOfSlugs(
         await JsonDecoder().decodeJsonFromUrl(upcomingGamesUrl));
 
     List<Game> upcomingGames =
-        await gameListCreator.createListOfGames(upcomingSlugs);
+        await listCreator.createListOfGames(upcomingSlugs);
     setState(() {
       upcomingGamesList = upcomingGames;
     });

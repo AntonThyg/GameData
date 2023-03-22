@@ -18,13 +18,13 @@ class ListCreator {
   Future<List<Game>> createListOfGames(var listOfSlugs) async {
     List<Game> listOfGames = [];
 
-    UrlCreator accessNetwork = UrlCreator();
-    JsonDecoder jsonParser = JsonDecoder();
+    UrlCreator urlCreator = UrlCreator();
+    JsonDecoder jsonDecoder = JsonDecoder();
     GameCreator gameCreator = GameCreator();
 
     for (int i = 0; i < listOfSlugs.length; i++) {
-      String url = accessNetwork.createSpecificQueryUrl(listOfSlugs[i]);
-      final jsonData = await jsonParser.decodeJsonFromUrl(url);
+      String url = urlCreator.createSpecificQueryUrl(listOfSlugs[i]);
+      final jsonData = await jsonDecoder.decodeJsonFromUrl(url);
       listOfGames.add(gameCreator.createGameFromJson(jsonData));
     }
     return listOfGames;
