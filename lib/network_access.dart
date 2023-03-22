@@ -13,8 +13,8 @@ class NetworkAccess {
   }
 
   String queryUpcoming() {
-    var currentDate = DateTime.now().toString().split(' ')[0];
-    var endDate =
+    final currentDate = DateTime.now().toString().split(' ')[0];
+    final endDate =
         DateTime.now().add(const Duration(days: 365)).toString().split(' ')[0];
     return 'https://api.rawg.io/api/games?dates=$currentDate,$endDate&ordering=released&key=33b90247a9b44a59b04d9d1e5871cac0';
   }
