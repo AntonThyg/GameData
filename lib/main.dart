@@ -52,7 +52,7 @@ class _GameDataWidgetState extends State<GameDataWidget> {
           (index) => Column(
                 children: [
                   Image.network(upcomingGamesList[index].imageUrl),
-                  Text(upcomingGamesList[index].name),
+                  Text(upcomingGamesList[index].title),
                   Text(upcomingGamesList[index].description),
                   Text(upcomingGamesList[index].releaseDate.toString()),
                 ],
@@ -68,12 +68,12 @@ class _GameDataWidgetState extends State<GameDataWidget> {
   }
 
   Future<void> makeUpcomingGameList() async {
-    final gameListCreator = GameListCreator();
+    final gameListCreator = ListCreator();
     final networkAccess = NetworkAccess();
     final upcomingGamesUrl = networkAccess.queryUpcoming();
 
-    List upcomingSlugs = gameListCreator
-        .createListOfSlugs(await JsonParser().parseJson(upcomingGamesUrl));
+    List upcomingSlugs = gameListCreator.createListOfSlugs(
+        await JsonParser().parseJsonFromUrl(upcomingGamesUrl));
 
     List<Game> upcomingGames =
         await gameListCreator.createListOfGames(upcomingSlugs);
