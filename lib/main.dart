@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
 import 'package:game_data/list_creator.dart';
-import 'package:game_data/json_parser.dart';
+import 'package:game_data/json_decoder.dart';
 import 'package:game_data/url_creator.dart';
 
 void main() {
@@ -73,7 +73,7 @@ class _GameDataWidgetState extends State<GameDataWidget> {
     final upcomingGamesUrl = networkAccess.createUpcomingGamesQueryUrl();
 
     List upcomingSlugs = gameListCreator.createListOfSlugs(
-        await JsonParser().parseJsonFromUrl(upcomingGamesUrl));
+        await JsonDecoder().decodeJsonFromUrl(upcomingGamesUrl));
 
     List<Game> upcomingGames =
         await gameListCreator.createListOfGames(upcomingSlugs);
