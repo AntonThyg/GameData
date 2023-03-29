@@ -4,6 +4,8 @@ import 'package:game_data/list_creator.dart';
 import 'package:game_data/json_decoder.dart';
 import 'package:game_data/url_creator.dart';
 
+List<Game> favoritesList = [];
+
 void main() {
   runApp(const MyApp());
 }
@@ -43,6 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = const SearchPage();
         break;
+      case 2:
+        page = const FavoritesPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -63,6 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     NavigationRailDestination(
                       icon: Icon(Icons.search),
                       label: Text('Search'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.thumb_up),
+                      label: Text('Favorites'),
                     ),
                   ],
                   selectedIndex: selectedIndex,
@@ -117,8 +126,6 @@ class _GameDataWidgetState extends State<GameDataWidget> {
   }
 
   List<Widget> makeWidgetList() {
-    //makeUpcomingGameList();
-
     if (upcomingGamesList.isNotEmpty) {
       return List.generate(
         10,
@@ -131,10 +138,33 @@ class _GameDataWidgetState extends State<GameDataWidget> {
                   height: 200,
                   child: Image.network(upcomingGamesList[index].imageUrl),
                 ),
+                const SizedBox(
+                  width: 20,
+                  height: 200,
+                  child: null,
+                ),
                 Column(
                   children: [
-                    Text(upcomingGamesList[index].title),
-                    Text(upcomingGamesList[index].releaseDateString),
+                    SizedBox(
+                      width: 600,
+                      height: 20,
+                      child: Text(upcomingGamesList[index].title),
+                    ),
+                    const SizedBox(
+                      width: 200,
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 600,
+                      height: 20,
+                      child: Text(upcomingGamesList[index].releaseDateString),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        manageFavoritedStatus(upcomingGamesList[index]);
+                      },
+                      child: const Icon(Icons.thumb_up_sharp),
+                    )
                   ],
                 )
               ],
@@ -169,6 +199,17 @@ class _GameDataWidgetState extends State<GameDataWidget> {
       },
     );
   }
+
+  void manageFavoritedStatus(Game game) {
+    switch (favoritesList.contains(game)) {
+      case true:
+        favoritesList.remove(game);
+        break;
+      case false:
+        favoritesList.add(game);
+        break;
+    }
+  }
 }
 
 class SearchPage extends StatefulWidget {
@@ -198,9 +239,9 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
             ElevatedButton(onPressed: () {}, child: const Text('Search')),
-            Text(search)
           ],
         ),
+        Text(search)
       ],
     );
   }
@@ -221,8 +262,72 @@ class CowWidget extends StatelessWidget {
     return Column(
       children: [
         Image.network(
-            'https://media.rawg.io/media/screenshots/c9f/c9f20e71776b841a8b7cf21917a7a15d.jpg'),
+          'https://media.rawg.io/media/screenshots/c9f/c9f20e71776b841a8b7cf21917a7a15d.jpg',
+        ),
       ],
+    );
+  }
+}
+
+class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({super.key});
+
+  @override
+  State<FavoritesPage> createState() => _FavoritesPageState();
+}
+
+class _FavoritesPageState extends State<FavoritesPage> {
+  List<Widget> favoriteWidgetList = [];
+
+  @override
+  Widget build(BuildContext context) {
+    makeFavoritesList();
+    return Column(
+      children: [
+        for (Widget w in favoriteWidgetList) w,
+      ],
+    );
+  }
+
+  List<Widget> makeFavoritesList() {
+    return List.generate(
+      favoritesList.length,
+      (index) => Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: Image.network(favoritesList[index].imageUrl),
+              ),
+              const SizedBox(
+                width: 20,
+                height: 200,
+                child: null,
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    width: 600,
+                    height: 20,
+                    child: Text(favoritesList[index].title),
+                  ),
+                  const SizedBox(
+                    width: 200,
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: 600,
+                    height: 20,
+                    child: Text(favoritesList[index].releaseDateString),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
