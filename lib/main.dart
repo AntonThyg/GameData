@@ -4,7 +4,13 @@ import 'package:game_data/list_creator.dart';
 import 'package:game_data/json_decoder.dart';
 import 'package:game_data/url_creator.dart';
 
+import 'game_creator.dart';
+
 List<Game> favoritesList = [];
+final gameCreator = GameCreator();
+final listCreator = ListCreator();
+final urlCreator = UrlCreator();
+final jsonDecoder = JsonDecoder();
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = const GameDataWidget();
+        page = const UpcomingGameDataPage();
         break;
       case 1:
         page = const SearchPage();
@@ -96,14 +102,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class GameDataWidget extends StatefulWidget {
-  const GameDataWidget({super.key});
+//upcoming games page
+class UpcomingGameDataPage extends StatefulWidget {
+  const UpcomingGameDataPage({super.key});
 
   @override
-  State<GameDataWidget> createState() => _GameDataWidgetState();
+  State<UpcomingGameDataPage> createState() => _UpcomingGameDataPageState();
 }
 
-class _GameDataWidgetState extends State<GameDataWidget> {
+class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
   List<Game> upcomingGamesList = [];
 
   @override
@@ -116,16 +123,16 @@ class _GameDataWidgetState extends State<GameDataWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final widgetList = makeWidgetList();
+    final upcomingGameWidgetList = makeUpcomingWidgetList();
     return ListView(
       padding: const EdgeInsets.all(8),
       children: [
-        for (Widget w in widgetList) w,
+        for (Widget w in upcomingGameWidgetList) w,
       ],
     );
   }
 
-  List<Widget> makeWidgetList() {
+  List<Widget> makeUpcomingWidgetList() {
     if (upcomingGamesList.isNotEmpty) {
       int i = 10;
       if (upcomingGamesList.length < 10) {
@@ -165,7 +172,7 @@ class _GameDataWidgetState extends State<GameDataWidget> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        manageFavoritedStatus(upcomingGamesList[index]);
+                        manageFavoriteStatus(upcomingGamesList[index]);
                       },
                       child: const Icon(Icons.thumb_up_sharp),
                     )
@@ -188,12 +195,10 @@ class _GameDataWidgetState extends State<GameDataWidget> {
   }
 
   Future<void> makeUpcomingGameList() async {
-    final listCreator = ListCreator();
-    final urlCreator = UrlCreator();
     final upcomingGamesUrl = urlCreator.createUpcomingGamesQueryUrl();
 
     List upcomingSlugs = listCreator.createListOfSlugs(
-        await JsonDecoder().decodeJsonFromUrl(upcomingGamesUrl));
+        await jsonDecoder.decodeJsonFromUrl(upcomingGamesUrl));
 
     List<Game> upcomingGames =
         await listCreator.createListOfGames(upcomingSlugs);
@@ -204,7 +209,7 @@ class _GameDataWidgetState extends State<GameDataWidget> {
     );
   }
 
-  void manageFavoritedStatus(Game game) {
+  void manageFavoriteStatus(Game game) {
     switch (favoritesList.contains(game)) {
       case true:
         favoritesList.remove(game);
@@ -216,6 +221,7 @@ class _GameDataWidgetState extends State<GameDataWidget> {
   }
 }
 
+//search page
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -227,6 +233,7 @@ class _SearchPageState extends State<SearchPage> {
   final controller = TextEditingController();
 
   String search = "";
+  Game? game;
 
   @override
   Widget build(BuildContext context) {
@@ -242,37 +249,68 @@ class _SearchPageState extends State<SearchPage> {
                 controller: controller,
               ),
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Search')),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  onPressed: () => _searchForGame(),
+                  child: const Text('Search')),
+            ),
           ],
         ),
-        Text(search)
       ],
     );
   }
 
-  void _onButtonPressed() {
-    setState(
-      () {
-        search = controller.text;
-      },
-    );
+  Future<void> _searchForGame() async {
+    search = controller.text;
+    final gameUrl = urlCreator.createSpecificQueryUrl(search);
+    final jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
+    setState(() {
+      game = gameCreator.createGameFromJson(jsonData);
+    });
   }
-}
 
-class CowWidget extends StatelessWidget {
-  const CowWidget({super.key});
-  @override
-  Widget build(BuildContext context) {
+  Widget displayGame(Game game) {
     return Column(
       children: [
-        Image.network(
-          'https://media.rawg.io/media/screenshots/c9f/c9f20e71776b841a8b7cf21917a7a15d.jpg',
+        Row(
+          children: [
+            SizedBox(
+              width: 200,
+              height: 200,
+              child: Image.network(game.imageUrl),
+            ),
+            const SizedBox(
+              width: 20,
+              height: 200,
+              child: null,
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  width: 600,
+                  height: 20,
+                  child: Text(game.title),
+                ),
+                const SizedBox(
+                  width: 200,
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 600,
+                  height: 20,
+                  child: Text(game.releaseDateString),
+                )
+              ],
+            )
+          ],
         ),
       ],
     );
   }
 }
 
+//favorites page
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
 
@@ -332,6 +370,21 @@ class _FavoritesPageState extends State<FavoritesPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+//cow
+class CowWidget extends StatelessWidget {
+  const CowWidget({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image.network(
+          'https://media.rawg.io/media/screenshots/c9f/c9f20e71776b841a8b7cf21917a7a15d.jpg',
+        ),
+      ],
     );
   }
 }
