@@ -8,10 +8,13 @@ class GameCreator {
     if (jsonData["metacritic"] != null) {
       rating = jsonData["metacritic"];
     }
-    DateTime releaseDateISO = DateTime.parse(jsonData["released"]);
-    var monthString = getMonthName(releaseDateISO);
-    String releaseDateString =
-        "$monthString ${releaseDateISO.day.toString()}, ${releaseDateISO.year.toString()}";
+    String releaseDateString = "Release date not announced";
+    if (jsonData["released"] != null) {
+      DateTime releaseDateISO = DateTime.parse(jsonData["released"]);
+      String monthString = getMonthName(releaseDateISO);
+      releaseDateString =
+          "$monthString ${releaseDateISO.day.toString()}, ${releaseDateISO.year.toString()}";
+    }
     String imageUrl = '';
     if (jsonData["background_image"] == null) {
       imageUrl =
@@ -19,8 +22,7 @@ class GameCreator {
     } else {
       imageUrl = jsonData["background_image"];
     }
-    return Game(
-        name, description, rating, releaseDateISO, releaseDateString, imageUrl);
+    return Game(name, description, rating, releaseDateString, imageUrl);
   }
 
   String getMonthName(releaseDateISO) {
