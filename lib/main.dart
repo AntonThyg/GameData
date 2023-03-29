@@ -134,7 +134,7 @@ class _GameDataWidgetState extends State<GameDataWidget> {
                 Column(
                   children: [
                     Text(upcomingGamesList[index].title),
-                    Text(upcomingGamesList[index].releaseDate.toString()),
+                    Text(upcomingGamesList[index].releaseDateString),
                   ],
                 )
               ],
