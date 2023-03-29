@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
 import 'package:game_data/list_creator.dart';
@@ -179,11 +181,9 @@ class _GameDataWidgetState extends State<GameDataWidget> {
     }
     return List.generate(
       1,
-      (index) => Column(
-        children: const [
-          Text('Loading data...'),
-        ],
-      ),
+      (index) => Column(children: [
+        Image.file(File('images/loading.gif')),
+      ]),
     );
   }
 
