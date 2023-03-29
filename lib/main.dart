@@ -127,8 +127,12 @@ class _GameDataWidgetState extends State<GameDataWidget> {
 
   List<Widget> makeWidgetList() {
     if (upcomingGamesList.isNotEmpty) {
+      int i = 10;
+      if (upcomingGamesList.length < 10) {
+        i = upcomingGamesList.length;
+      }
       return List.generate(
-        10,
+        i,
         (index) => Column(
           children: [
             Row(
