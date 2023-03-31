@@ -1,9 +1,10 @@
 import 'game.dart';
+import 'package:intl/intl.dart';
 
 class GameCreator {
   Game createGameFromJson(final jsonData) {
     String name = jsonData["name"];
-    String description = jsonData["description"];
+    String description = getGameDescription(jsonData);
     int rating = getGameRating(jsonData);
     String releaseDate = getGameReleaseDate(jsonData);
     String imageUrl = getImageUrl(jsonData);
@@ -65,5 +66,9 @@ class GameCreator {
     } else {
       return jsonData["background_image"];
     }
+  }
+
+  String getGameDescription(jsonData) {
+    return Bidi.stripHtmlIfNeeded(jsonData["description"]);
   }
 }
