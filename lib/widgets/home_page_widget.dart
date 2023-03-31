@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:game_data/favorites_page_widget.dart';
-import 'package:game_data/search_page_widget.dart';
-import 'package:game_data/upcoming_games_widget.dart';
+import 'package:game_data/widgets/favorites_page_widget.dart';
+import 'package:game_data/widgets/search_page_widget.dart';
+import 'package:game_data/widgets/upcoming_games_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

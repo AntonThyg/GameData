@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:game_data/main.dart';
 
-import 'game.dart';
+import '../game.dart';
 
 class UpcomingGameDataPage extends StatefulWidget {
   const UpcomingGameDataPage({super.key});

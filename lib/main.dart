@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
 import 'package:game_data/game_creator.dart';
-import 'package:game_data/home_page_widget.dart';
+import 'package:game_data/widgets/home_page_widget.dart';
 import 'package:game_data/list_creator.dart';
 import 'package:game_data/json_decoder.dart';
 import 'package:game_data/url_creator.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:game_data/game.dart';
 import 'package:game_data/main.dart';
-
-import 'game.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
