@@ -4,25 +4,11 @@ class GameCreator {
   Game createGameFromJson(final jsonData) {
     String name = jsonData["name"];
     String description = jsonData["description"];
-    int rating = 0;
-    if (jsonData["metacritic"] != null) {
-      rating = jsonData["metacritic"];
-    }
-    String releaseDateString = "Release date not announced";
-    if (jsonData["released"] != null) {
-      DateTime releaseDateISO = DateTime.parse(jsonData["released"]);
-      String monthString = getMonthName(releaseDateISO);
-      releaseDateString =
-          "$monthString ${releaseDateISO.day.toString()}, ${releaseDateISO.year.toString()}";
-    }
-    String imageUrl = '';
-    if (jsonData["background_image"] == null) {
-      imageUrl =
-          'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg';
-    } else {
-      imageUrl = jsonData["background_image"];
-    }
-    return Game(name, description, rating, releaseDateString, imageUrl);
+    int rating = getGameRating(jsonData);
+    String releaseDate = getGameReleaseDate(jsonData);
+    String imageUrl = getImageUrl(jsonData);
+
+    return Game(name, description, rating, releaseDate, imageUrl);
   }
 
   String getMonthName(releaseDateISO) {
@@ -53,5 +39,31 @@ class GameCreator {
         return "December";
     }
     return '';
+  }
+
+  int getGameRating(jsonData) {
+    if (jsonData["metacritic"] != null) {
+      return jsonData["metacritic"];
+    } else {
+      return 0;
+    }
+  }
+
+  String getGameReleaseDate(jsonData) {
+    if (jsonData["released"] != null) {
+      DateTime releaseDateISO = DateTime.parse(jsonData["released"]);
+      String monthString = getMonthName(releaseDateISO);
+      return "$monthString ${releaseDateISO.day.toString()}, ${releaseDateISO.year.toString()}";
+    } else {
+      return "Release date not announced";
+    }
+  }
+
+  String getImageUrl(jsonData) {
+    if (jsonData["background_image"] == null) {
+      return 'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg';
+    } else {
+      return jsonData["background_image"];
+    }
   }
 }

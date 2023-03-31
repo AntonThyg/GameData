@@ -11,10 +11,8 @@ void main() {
   final stringData = testFile.readAsStringSync();
   final decodedJsonObject = jsonDecode(stringData);
 
-  test("if the release date is 2009-05-10, getMonthName will return 'May.'",
-      () {
-    String expected =
-        gameCreator.getMonthName(DateTime.parse(decodedJsonObject["released"]));
-    expect(expected, "May");
+  test("i can get the metacritic rating of a game using getGameRating", () {
+    int expected = gameCreator.getGameRating(decodedJsonObject);
+    expect(expected, 83);
   });
 }
