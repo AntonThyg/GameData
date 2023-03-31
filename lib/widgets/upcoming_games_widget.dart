@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:game_data/main.dart';
 
@@ -73,7 +74,15 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        manageFavoriteStatus(upcomingGamesList[index]);
+                        switch (
+                            favoritesList.contains(upcomingGamesList[index])) {
+                          case true:
+                            favoritesList.remove(upcomingGamesList[index]);
+                            break;
+                          case false:
+                            favoritesList.add(upcomingGamesList[index]);
+                            break;
+                        }
                       },
                       child: const Icon(Icons.thumb_up_sharp),
                     )
@@ -106,16 +115,5 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
         upcomingGamesList = upcomingGames;
       },
     );
-  }
-
-  void manageFavoriteStatus(Game game) {
-    switch (favoritesList.contains(game)) {
-      case true:
-        favoritesList.remove(game);
-        break;
-      case false:
-        favoritesList.add(game);
-        break;
-    }
   }
 }

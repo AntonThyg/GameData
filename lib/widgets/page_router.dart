@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_data/widgets/cow_widget.dart';
 import 'package:game_data/widgets/favorites_page_widget.dart';
 import 'package:game_data/widgets/search_page_widget.dart';
 import 'package:game_data/widgets/upcoming_games_widget.dart';
@@ -24,6 +25,9 @@ class _PageRouter extends State<PageRouter> {
       case 2:
         page = const FavoritesPage();
         break;
+      case 3:
+        page = const CowWidget();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -48,6 +52,10 @@ class _PageRouter extends State<PageRouter> {
                     NavigationRailDestination(
                       icon: Icon(Icons.thumb_up),
                       label: Text('Favorites'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Text(" "),
+                      label: Text(" "),
                     ),
                   ],
                   selectedIndex: selectedIndex,

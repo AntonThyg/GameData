@@ -9,19 +9,16 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  List<Widget> favoriteWidgetList = [];
-
   @override
   Widget build(BuildContext context) {
-    makeFavoritesList();
     return Column(
       children: [
-        for (Widget w in favoriteWidgetList) w,
+        for (Widget w in makeFavoritesWidgetList()) w,
       ],
     );
   }
 
-  List<Widget> makeFavoritesList() {
+  List<Widget> makeFavoritesWidgetList() {
     return List.generate(
       favoritesList.length,
       (index) => Column(
@@ -54,6 +51,21 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     height: 20,
                     child: Text(favoritesList[index].releaseDateString),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        switch (favoritesList.contains(favoritesList[index])) {
+                          case true:
+                            favoritesList.remove(favoritesList[index]);
+                            break;
+                          case false:
+                            favoritesList.add(favoritesList[index]);
+                            break;
+                        }
+                      });
+                    },
+                    child: const Icon(Icons.thumb_up_sharp),
+                  )
                 ],
               )
             ],
