@@ -53,7 +53,6 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
                 const SizedBox(
                   width: 20,
                   height: 200,
-                  child: null,
                 ),
                 Column(
                   children: [
