@@ -17,28 +17,34 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text('Enter the text in the box below.'),
-        Row(
-          children: [
-            SizedBox(
-              width: 800,
-              child: TextField(
-                textAlign: TextAlign.center,
-                controller: controller,
+    if (game == null) {
+      return Column(
+        children: [
+          const Text('Enter the text in the box below.'),
+          Row(
+            children: [
+              SizedBox(
+                width: 800,
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  controller: controller,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                  onPressed: () => _searchForGame(),
-                  child: const Text('Search')),
-            ),
-          ],
-        ),
-      ],
-    );
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                    onPressed: () => _searchForGame(),
+                    child: const Text('Search')),
+              ),
+            ],
+          ),
+        ],
+      );
+    } else {
+      Widget page = displayGame(game!);
+      game = null;
+      return page;
+    }
   }
 
   Future<void> _searchForGame() async {
