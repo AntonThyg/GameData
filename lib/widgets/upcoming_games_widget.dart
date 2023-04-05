@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:game_data/main.dart';
+import 'package:game_data/widgets/game_widget.dart';
 
 import '../game.dart';
 
@@ -43,53 +44,7 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
       return List.generate(
         i,
         (index) => Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: Image.network(upcomingGamesList[index].imageUrl),
-                ),
-                const SizedBox(
-                  width: 20,
-                  height: 200,
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      width: 600,
-                      height: 20,
-                      child: Text(upcomingGamesList[index].title),
-                    ),
-                    const SizedBox(
-                      width: 200,
-                      height: 20,
-                    ),
-                    SizedBox(
-                      width: 600,
-                      height: 20,
-                      child: Text(upcomingGamesList[index].releaseDateString),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        switch (
-                            favoritesList.contains(upcomingGamesList[index])) {
-                          case true:
-                            favoritesList.remove(upcomingGamesList[index]);
-                            break;
-                          case false:
-                            favoritesList.add(upcomingGamesList[index]);
-                            break;
-                        }
-                      },
-                      child: const Icon(Icons.thumb_up_sharp),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ],
+          children: [GameWidget(upcomingGamesList[index])],
         ),
       );
     }
