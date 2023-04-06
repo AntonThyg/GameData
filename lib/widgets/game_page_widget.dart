@@ -4,37 +4,52 @@ import '../game.dart';
 
 class GamePage {
   Widget getGamePageWidget(Game game) {
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: () {},
-          child: const Icon(Icons.arrow_back_outlined),
-        ),
-        Container(
-          height: 20,
-          width: 600,
-          color: Colors.grey,
-          child: Text(game.title),
-        ),
-        const SizedBox(
-          height: 20,
-          child: null,
-        ),
-        Container(
-          height: 20,
-          width: 600,
-          color: Colors.grey,
-          child: Text('${game.rating}'),
-        ),
-        const SizedBox(
-          height: 20,
-          child: null,
-        ),
-        Container(
-          color: Colors.grey,
-          child: Text(game.description),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0, top: 8.0, bottom: 8.0),
+      child: ListView(
+        children: [
+          ElevatedButton(
+            onPressed: () {},
+            child: const Icon(Icons.arrow_back_outlined),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: SizedBox(
+              child: Image.network(
+                game.imageUrl,
+                height: 400,
+              ),
+            ),
+          ),
+          SizedBox(
+            child: Text(
+              game.title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 35),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            child: Text(
+              'Metacritic rating: ${game.rating}/100',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 15),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            width: 400,
+            child: Text(
+              game.description,
+              //textAlign: TextAlign.center,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
