@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
 import 'package:game_data/main.dart';
+import 'package:game_data/widgets/game_page_widget.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -41,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
         ],
       );
     } else {
-      Widget page = displayGame(game!);
+      Widget page = GamePage().getGamePageWidget(game!);
       game = null;
       return page;
     }
@@ -54,44 +55,5 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       game = gameCreator.createGameFromJson(jsonData);
     });
-  }
-
-  Widget displayGame(Game game) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            SizedBox(
-              width: 200,
-              height: 200,
-              child: Image.network(game.imageUrl),
-            ),
-            const SizedBox(
-              width: 20,
-              height: 200,
-              child: null,
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  width: 600,
-                  height: 20,
-                  child: Text(game.title),
-                ),
-                const SizedBox(
-                  width: 200,
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 600,
-                  height: 20,
-                  child: Text(game.releaseDateString),
-                )
-              ],
-            )
-          ],
-        ),
-      ],
-    );
   }
 }
