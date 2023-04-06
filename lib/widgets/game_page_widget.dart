@@ -2,18 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../game.dart';
 
-class GamePage extends StatefulWidget {
-  Game game;
-
-  GamePage(this.game, {super.key});
-
-  @override
-  State<GamePage> createState() => _GamePageState();
-}
-
-class _GamePageState extends State<GamePage> {
-  @override
-  Widget build(BuildContext context) {
+class GamePage {
+  Widget getGamePageWidget(Game game) {
     return Column(
       children: [
         ElevatedButton(
@@ -24,7 +14,7 @@ class _GamePageState extends State<GamePage> {
           height: 20,
           width: 600,
           color: Colors.grey,
-          child: Text(widget.game.title),
+          child: Text(game.title),
         ),
         const SizedBox(
           height: 20,
@@ -34,7 +24,7 @@ class _GamePageState extends State<GamePage> {
           height: 20,
           width: 600,
           color: Colors.grey,
-          child: Text('${widget.game.rating}'),
+          child: Text('${game.rating}'),
         ),
         const SizedBox(
           height: 20,
@@ -42,7 +32,7 @@ class _GamePageState extends State<GamePage> {
         ),
         Container(
           color: Colors.grey,
-          child: Text(widget.game.description),
+          child: Text(game.description),
         )
       ],
     );
