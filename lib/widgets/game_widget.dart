@@ -3,9 +3,9 @@ import 'package:game_data/game.dart';
 import 'package:game_data/main.dart';
 
 class GameWidget extends StatefulWidget {
-  final Game game;
+  Game game;
 
-  const GameWidget(this.game, {super.key});
+  GameWidget(this.game, {super.key});
 
   @override
   State<GameWidget> createState() => _GameWidgetState();
@@ -47,23 +47,25 @@ class _GameWidgetState extends State<GameWidget> {
               ),
             ),
             ElevatedButton(
-              onPressed: () => setState(
-                () {
-                  switch (favoritesList.contains(widget.game)) {
-                    case false:
-                      favoritesList.add(widget.game);
-                      break;
-                    case true:
-                      favoritesList.remove(widget.game);
-                      break;
-                  }
-                },
-              ),
-              child: const Icon(Icons.thumb_up_sharp),
-            )
+              onPressed: () => setState(() => manageFavorited()),
+              child: Icon(favoritesList.contains(widget.game)
+                  ? Icons.thumb_down
+                  : Icons.thumb_up),
+            ),
           ],
         )
       ],
     );
+  }
+
+  void manageFavorited() {
+    switch (favoritesList.contains(widget.game)) {
+      case true:
+        favoritesList.remove(widget.game);
+        break;
+      case false:
+        favoritesList.add(widget.game);
+        break;
+    }
   }
 }
