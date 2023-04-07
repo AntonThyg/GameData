@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SEAS Co.',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
-        canvasColor: Colors.white60,
-      ),
+          primarySwatch: Colors.grey,
+          canvasColor: Colors.white60,
+          fontFamily: 'Verdana'),
       home: const Scaffold(body: PageRouter()),
     );
   }

@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.5
   intl: ^0.17.0
-
+  html: ^0.15.2
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +61,23 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  fonts:
+    - family: Verdana
+    - fonts:
+      - asset: fonts/Verdana.ttf
+      - asset: fonts/Verdana-Bold.ttf
+        weight: 700
+      - asset: fonts/Verdana-Bold-Italic.ttf
+        style: italic
+        weight: 700
+      - asset: fonts/Verdana-Italic.ttf
+        style: italic
+
+    - family: Tahoma
+    - fonts:
+        - asset: fonts/Tahoma.ttf
+        - asset: fonts/Tahoma-Bold.ttf
+          weight: 700
 
   # To add assets to your application, add an assets section, like this:
   # assets:
