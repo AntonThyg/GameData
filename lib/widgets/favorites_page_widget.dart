@@ -12,12 +12,34 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        for (Game g in favoritesList) GameWidget(g),
+        for (Game g in favoritesList)
+          Column(
+            children: [
+              GameWidget(g),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    manageFavorited(g);
+                  });
+                },
+                child: Icon(favoritesList.contains(g)
+                    ? Icons.thumb_down
+                    : Icons.thumb_up),
+              ),
+            ],
+          ),
       ],
     );
+  }
+
+  void manageFavorited(Game g) {
+    if (favoritesList.contains(g)) {
+      favoritesList.remove(g);
+    } else {
+      favoritesList.add(g);
+    }
   }
 }

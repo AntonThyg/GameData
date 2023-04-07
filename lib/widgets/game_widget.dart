@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
-import 'package:game_data/main.dart';
 
 class GameWidget extends StatefulWidget {
   Game game;
@@ -46,26 +45,9 @@ class _GameWidgetState extends State<GameWidget> {
                 child: Text(widget.game.releaseDateString),
               ),
             ),
-            ElevatedButton(
-              onPressed: () => setState(() => manageFavorited()),
-              child: Icon(favoritesList.contains(widget.game)
-                  ? Icons.thumb_down
-                  : Icons.thumb_up),
-            ),
           ],
         )
       ],
     );
-  }
-
-  void manageFavorited() {
-    switch (favoritesList.contains(widget.game)) {
-      case true:
-        favoritesList.remove(widget.game);
-        break;
-      case false:
-        favoritesList.add(widget.game);
-        break;
-    }
   }
 }
