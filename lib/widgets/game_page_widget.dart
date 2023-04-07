@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../game.dart';
@@ -55,7 +57,6 @@ class GamePage {
             width: 400,
             child: Text(
               game.description,
-              //textAlign: TextAlign.center,
             ),
           )
         ],

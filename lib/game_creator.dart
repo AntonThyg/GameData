@@ -1,5 +1,4 @@
 import 'game.dart';
-import 'package:intl/intl.dart';
 
 class GameCreator {
   Game createGameFromJson(final jsonData) {
@@ -69,6 +68,13 @@ class GameCreator {
   }
 
   String getGameDescription(jsonData) {
-    return Bidi.stripHtmlIfNeeded(jsonData["description"]);
+    String gameDescription = jsonData["description"];
+    gameDescription = gameDescription.replaceAll('<p>', '');
+    gameDescription = gameDescription.replaceAll('</p>', '\n');
+    gameDescription = gameDescription.replaceAll('&#39;', '\'');
+    gameDescription = gameDescription.replaceAll('<br />', '');
+    gameDescription = gameDescription.replaceAll('&amp;', '&');
+
+    return (gameDescription);
   }
 }
