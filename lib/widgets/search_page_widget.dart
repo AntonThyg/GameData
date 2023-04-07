@@ -42,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
         ],
       );
     } else {
-      Widget page = GamePage().getGamePageWidget(game!);
+      Widget page = GamePage(game!);
       game = null;
       return page;
     }

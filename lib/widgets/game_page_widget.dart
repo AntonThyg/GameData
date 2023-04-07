@@ -3,9 +3,20 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../game.dart';
+import '../main.dart';
 
-class GamePage {
-  Widget getGamePageWidget(Game game) {
+class GamePage extends StatefulWidget {
+  final Game game;
+
+  const GamePage(this.game, {super.key});
+
+  @override
+  State<GamePage> createState() => _GamePageState();
+}
+
+class _GamePageState extends State<GamePage> {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0, top: 8.0, bottom: 8.0),
       child: ListView(
@@ -18,14 +29,14 @@ class GamePage {
             padding: const EdgeInsets.only(top: 8.0),
             child: SizedBox(
               child: Image.network(
-                game.imageUrl,
+                widget.game.imageUrl,
                 height: 400,
               ),
             ),
           ),
           SizedBox(
             child: Text(
-              game.title,
+              widget.game.title,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 35),
             ),
@@ -35,7 +46,7 @@ class GamePage {
           ),
           SizedBox(
             child: Text(
-              game.releaseDateString,
+              widget.game.releaseDateString,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
             ),
@@ -45,7 +56,7 @@ class GamePage {
           ),
           SizedBox(
             child: Text(
-              'Metacritic rating: ${game.rating}/100',
+              'Metacritic rating: ${widget.game.rating}/100',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 15),
             ),
@@ -56,11 +67,25 @@ class GamePage {
           SizedBox(
             width: 400,
             child: Text(
-              game.description,
+              widget.game.description,
             ),
+          ),
+          ElevatedButton(
+            onPressed: () => setState(() => manageFavorited(widget.game)),
+            child: Icon(favoritesList.contains(widget.game)
+                ? Icons.thumb_down
+                : Icons.thumb_up),
           )
         ],
       ),
     );
+  }
+
+  void manageFavorited(Game g) {
+    if (favoritesList.contains(g)) {
+      favoritesList.remove(g);
+    } else {
+      favoritesList.add(g);
+    }
   }
 }
