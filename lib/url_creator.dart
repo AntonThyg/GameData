@@ -13,6 +13,9 @@ class UrlCreator {
     if (gameTitle.contains(';')) {
       gameTitle = gameTitle.replaceAll(';', '');
     }
+    if (gameTitle.contains('\'')) {
+      gameTitle = gameTitle.replaceAll('\'', '');
+    }
     return 'https://api.rawg.io/api/games/$gameTitle?stores=1,2,3,4,5,6,7,8,11&key=$_key';
   }
 

@@ -29,6 +29,9 @@ class _SearchPageState extends State<SearchPage> {
                 child: TextField(
                   textAlign: TextAlign.center,
                   controller: controller,
+                  onSubmitted: (search) {
+                    _searchForGame();
+                  },
                 ),
               ),
               Padding(
@@ -50,8 +53,14 @@ class _SearchPageState extends State<SearchPage> {
 
   Future<void> _searchForGame() async {
     search = controller.text;
-    final gameUrl = urlCreator.createSpecificQueryUrl(search);
-    final jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
+    String gameUrl = urlCreator.createSpecificQueryUrl(search);
+    var jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
+
+    if (jsonData['redirect'] == true) {
+      gameUrl = urlCreator.createSpecificQueryUrl(jsonData['slug']);
+      jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
+    }
+
     setState(() {
       game = gameCreator.createGameFromJson(jsonData);
     });
