@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:game_data/widgets/cow_widget.dart';
 import 'package:game_data/widgets/favorites_page_widget.dart';
@@ -6,14 +8,21 @@ import 'package:game_data/widgets/upcoming_games_widget.dart';
 
 class PageRouter extends StatefulWidget {
   const PageRouter({super.key});
+
   @override
   State<PageRouter> createState() => _PageRouter();
 }
 
 class _PageRouter extends State<PageRouter> {
+  bool ignoring = true;
   var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    Timer(const Duration(seconds: 6), () {
+      _setIgnoringState();
+    });
+
     Widget page;
     switch (selectedIndex) {
       case 0:
@@ -38,32 +47,35 @@ class _PageRouter extends State<PageRouter> {
           body: Row(
             children: [
               SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 600,
-                  destinations: const [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.watch_later_outlined),
-                      label: Text('Upcoming'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.search),
-                      label: Text('Search'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.thumb_up),
-                      label: Text('Favorites'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Text(" "),
-                      label: Text(" "),
-                    ),
-                  ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
+                child: IgnorePointer(
+                  ignoring: ignoring,
+                  child: NavigationRail(
+                    extended: constraints.maxWidth >= 600,
+                    destinations: const [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.watch_later_outlined),
+                        label: Text('Upcoming'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.search),
+                        label: Text('Search'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.thumb_up),
+                        label: Text('Favorites'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Text(" "),
+                        label: Text(" "),
+                      ),
+                    ],
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (value) {
+                      setState(() {
+                        selectedIndex = value;
+                      });
+                    },
+                  ),
                 ),
               ),
               Expanded(
@@ -77,5 +89,11 @@ class _PageRouter extends State<PageRouter> {
         );
       },
     );
+  }
+
+  void _setIgnoringState() {
+    setState(() {
+      ignoring = false;
+    });
   }
 }
