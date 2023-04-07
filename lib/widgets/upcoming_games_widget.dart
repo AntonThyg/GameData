@@ -14,8 +14,6 @@ class UpcomingGameDataPage extends StatefulWidget {
 }
 
 class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
-  List<Game> upcomingGamesList = [];
-
   @override
   void initState() {
     if (upcomingGamesList.isEmpty) {
