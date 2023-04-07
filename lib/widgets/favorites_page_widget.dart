@@ -16,7 +16,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return ListView(
       children: [
         for (Game g in favoritesList)
-          Column(
+          Row(
             children: [
               GameWidget(g),
               ElevatedButton(

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:game_data/main.dart';
 import 'package:game_data/widgets/game_widget.dart';
@@ -24,34 +22,34 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    final upcomingGameWidgetList = makeUpcomingWidgetList();
     return ListView(
-      padding: const EdgeInsets.all(8),
       children: [
-        for (Widget w in upcomingGameWidgetList) w,
+        for (Game g in upcomingGamesList)
+          Row(
+            children: [
+              GameWidget(g),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    manageFavorited(g);
+                  });
+                },
+                child: Icon(favoritesList.contains(g)
+                    ? Icons.thumb_down
+                    : Icons.thumb_up),
+              ),
+            ],
+          ),
       ],
     );
   }
 
-  List<Widget> makeUpcomingWidgetList() {
-    if (upcomingGamesList.isNotEmpty) {
-      int i = 10;
-      if (upcomingGamesList.length < 10) {
-        i = upcomingGamesList.length;
-      }
-      return List.generate(
-        i,
-        (index) => Column(
-          children: [GameWidget(upcomingGamesList[index])],
-        ),
-      );
+  void manageFavorited(Game g) {
+    if (favoritesList.contains(g)) {
+      favoritesList.remove(g);
+    } else {
+      favoritesList.add(g);
     }
-    return List.generate(
-      1,
-      (index) => Column(children: [
-        Image.file(File('images/loading.gif')),
-      ]),
-    );
   }
 
   Future<void> makeUpcomingGameList() async {
