@@ -29,7 +29,17 @@ class GamePage {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
+          ),
+          SizedBox(
+            child: Text(
+              game.releaseDateString,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
           ),
           SizedBox(
             child: Text(
