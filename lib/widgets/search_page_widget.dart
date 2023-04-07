@@ -29,6 +29,9 @@ class _SearchPageState extends State<SearchPage> {
                 child: TextField(
                   textAlign: TextAlign.center,
                   controller: controller,
+                  onSubmitted: (search) {
+                    _searchForGame();
+                  },
                 ),
               ),
               Padding(
