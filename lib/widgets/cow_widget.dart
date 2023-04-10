@@ -6,8 +6,8 @@ class CowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.network(
-          'https://media.rawg.io/media/screenshots/c9f/c9f20e71776b841a8b7cf21917a7a15d.jpg',
+        Image.asset(
+          'images/cow.jpg',
         ),
       ],
     );
