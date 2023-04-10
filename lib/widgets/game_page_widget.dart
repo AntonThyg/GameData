@@ -21,10 +21,6 @@ class _GamePageState extends State<GamePage> {
       padding: const EdgeInsets.only(right: 8.0, top: 8.0, bottom: 8.0),
       child: ListView(
         children: [
-          ElevatedButton(
-            onPressed: () {},
-            child: const Icon(Icons.arrow_back_outlined),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: SizedBox(
