@@ -1,7 +1,7 @@
 import 'dart:io';
 
 class UrlCreator {
-  final String _key = File("lib/key.txt").readAsStringSync();
+  final String _key = File("secrets/key.txt").readAsStringSync();
 
   String createSpecificQueryUrl(String gameTitle) {
     if (gameTitle.contains(' ')) {
