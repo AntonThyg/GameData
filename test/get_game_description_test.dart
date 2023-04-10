@@ -13,6 +13,6 @@ void main() {
 
   test("I can get the description of a game without the html tags", () {
     String expected = gameCreator.getGameDescription(decodedJsonObject);
-    expect(expected, startsWith(" One of the most popular games"));
+    expect(expected, startsWith("One of the most popular games"));
   });
 }
