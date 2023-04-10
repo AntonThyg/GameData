@@ -22,26 +22,37 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        for (Game g in upcomingGamesList)
-          Row(
-            children: [
-              GameWidget(g),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    manageFavorited(g);
-                  });
-                },
-                child: Icon(favoritesList.contains(g)
-                    ? Icons.thumb_down
-                    : Icons.thumb_up),
-              ),
-            ],
+    if (upcomingGamesList.isEmpty) {
+      return Column(
+        children: [
+          Image.asset(
+            "images/loading.gif",
+            fit: BoxFit.contain,
           ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return ListView(
+        children: [
+          for (Game g in upcomingGamesList)
+            Row(
+              children: [
+                GameWidget(g),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      manageFavorited(g);
+                    });
+                  },
+                  child: Icon(favoritesList.contains(g)
+                      ? Icons.thumb_down
+                      : Icons.thumb_up),
+                ),
+              ],
+            ),
+        ],
+      );
+    }
   }
 
   void manageFavorited(Game g) {
