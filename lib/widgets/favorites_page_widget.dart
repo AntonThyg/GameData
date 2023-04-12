@@ -23,7 +23,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    manageFavorited(g);
+                    setFavoritedState(g);
                   });
                 },
                 child: Icon(favoritesList.contains(g)
@@ -36,7 +36,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 
-  void manageFavorited(Game g) {
+  void setFavoritedState(Game g) {
     if (favoritesList.contains(g)) {
       favoritesList.remove(g);
     } else {

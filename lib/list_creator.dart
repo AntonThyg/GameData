@@ -2,14 +2,14 @@ import 'package:game_data/game.dart';
 import 'package:game_data/json_decoder.dart';
 import 'package:game_data/url_creator.dart';
 
-import 'game_creator.dart';
+import 'game_parser.dart';
 
 class ListCreator {
-  List createListOfSlugs(var parsedJsonData) {
-    List listOfGameSlugs = [];
-    final numberOfGames = parsedJsonData['results'].length;
+  List<String> createListOfSlugs(var gameJsonData) {
+    List<String> listOfGameSlugs = [];
+    final numberOfGames = gameJsonData['results'].length;
     for (int i = 0; i < numberOfGames; i++) {
-      String slug = parsedJsonData['results'][i]['slug'];
+      String slug = gameJsonData['results'][i]['slug'];
       listOfGameSlugs.add(slug);
     }
     return listOfGameSlugs;
@@ -20,7 +20,7 @@ class ListCreator {
 
     UrlCreator urlCreator = UrlCreator();
     JsonDecoder jsonDecoder = JsonDecoder();
-    GameCreator gameCreator = GameCreator();
+    GameParser gameCreator = GameParser();
 
     for (int i = 0; i < listOfSlugs.length; i++) {
       String url = urlCreator.createSpecificQueryUrl(listOfSlugs[i]);

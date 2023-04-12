@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 import 'game.dart';
 
-class GameCreator {
+class GameParser {
   Game createGameFromJson(final jsonData) {
     String name = jsonData["name"];
     String description = getGameDescription(jsonData);

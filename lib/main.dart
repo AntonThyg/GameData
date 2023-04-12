@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
-import 'package:game_data/game_creator.dart';
 import 'package:game_data/json_decoder.dart';
 import 'package:game_data/list_creator.dart';
 import 'package:game_data/url_creator.dart';
 import 'package:game_data/widgets/page_router.dart';
 
+import 'game_parser.dart';
+
 List<Game> favoritesList = [];
 List<Game> upcomingGamesList = [];
-final gameCreator = GameCreator();
+final gameCreator = GameParser();
 final listCreator = ListCreator();
 final urlCreator = UrlCreator();
 final jsonDecoder = JsonDecoder();
