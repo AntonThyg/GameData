@@ -45,8 +45,8 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
                     });
                   },
                   child: Icon(favoritesList.contains(g)
-                      ? Icons.thumb_down
-                      : Icons.thumb_up),
+                      ? Icons.thumb_up
+                      : Icons.thumb_up_outlined),
                 ),
               ],
             ),

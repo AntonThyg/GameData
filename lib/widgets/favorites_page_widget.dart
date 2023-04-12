@@ -27,8 +27,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   });
                 },
                 child: Icon(favoritesList.contains(g)
-                    ? Icons.thumb_down
-                    : Icons.thumb_up),
+                    ? Icons.thumb_up
+                    : Icons.thumb_up_outlined),
               ),
             ],
           ),

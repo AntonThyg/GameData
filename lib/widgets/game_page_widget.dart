@@ -66,8 +66,8 @@ class _GamePageState extends State<GamePage> {
           ElevatedButton(
             onPressed: () => setState(() => manageFavorited(widget.game)),
             child: Icon(favoritesList.contains(widget.game)
-                ? Icons.thumb_down
-                : Icons.thumb_up),
+                ? Icons.thumb_up
+                : Icons.thumb_up_outlined),
           )
         ],
       ),
