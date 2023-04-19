@@ -1,16 +1,28 @@
-# game_data
+Project Name:
+Game Data
 
-A new Flutter project.
+Contributors:
+Spencer Smith, Evan Greenfield, Antone Thygerson, and Shaun Guise
 
-## Getting Started
+Requirements:
+- User must have the proper key.txt file in the project in order to access RAWG.io services 
+- User must select desktop as device
 
-This project is a starting point for a Flutter application.
+Proper Use Case:
+     Users will be greeted with a list of the the my recent 20 upcoming games that will be releasing.
+The user can then scroll threw and click on any of the video games to then pull up more detail about
+the game like a description, Metacritic rating, and an enlarged picture. If the user would like search
+for a specific upcoming game or a game that has already been released, then they may click the search
+button on the left toolbar and type in their search. If some games catch the user's eye, they may use
+the favorites button, a thumbs up, and add the game to their favorites page to save for later.
 
-A few resources to get you started if this is your first Flutter project:
+Technologies Used:
+- Dart
+- Flutter
+- Rawg.io
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Contact
+- spencer.smith@bsu.edu
+- evan.greenfield@bsu.edu
+- arthygerson@bsu.edu
+- deshaun.guise@bsu.edu
