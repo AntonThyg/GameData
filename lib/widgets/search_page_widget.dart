@@ -70,7 +70,7 @@ class _SearchPageState extends State<SearchPage> {
     }
 
     setState(() {
-      game = gameParser.parse(jsonData);
+      game = gameParser.createGameFromJson(jsonData);
     });
   }
 }

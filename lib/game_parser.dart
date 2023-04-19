@@ -3,44 +3,14 @@ import 'package:intl/intl.dart';
 import 'game.dart';
 
 class GameParser {
-  Game parse(final jsonData) {
+  Game createGameFromJson(final jsonData) {
     String name = jsonData["name"];
     String description = getGameDescription(jsonData);
     int rating = getGameRating(jsonData);
-    String releaseDate = getGameReleaseDate(jsonData);
+    DateTime releaseDate = getGameReleaseDate(jsonData);
     String imageUrl = getImageUrl(jsonData);
 
     return Game(name, description, rating, releaseDate, imageUrl);
-  }
-
-  String getMonthName(releaseDateISO) {
-    switch (releaseDateISO.month.toString()) {
-      case "1":
-        return "January";
-      case "2":
-        return "February";
-      case "3":
-        return "March";
-      case "4":
-        return "April";
-      case "5":
-        return "May";
-      case "6":
-        return "June";
-      case "7":
-        return "July";
-      case "8":
-        return "August";
-      case "9":
-        return "September";
-      case "10":
-        return "October";
-      case "11":
-        return "November";
-      case "12":
-        return "December";
-    }
-    return '';
   }
 
   int getGameRating(jsonData) {
@@ -51,14 +21,11 @@ class GameParser {
     }
   }
 
-  String getGameReleaseDate(jsonData) {
+  DateTime getGameReleaseDate(jsonData) {
     if (jsonData["released"] != null) {
-      DateTime releaseDateISO = DateTime.parse(jsonData["released"]);
-      String monthString = getMonthName(releaseDateISO);
-      return "$monthString ${releaseDateISO.day.toString()}, ${releaseDateISO.year.toString()}";
-    } else {
-      return "Release date not announced";
+      return DateTime.parse(jsonData["released"]);
     }
+    return DateTime(0);
   }
 
   String getImageUrl(jsonData) {
@@ -86,5 +53,44 @@ class GameParser {
     gameDescription = Bidi.stripHtmlIfNeeded(gameDescription);
 
     return (gameDescription);
+  }
+
+  String getGameReleaseDateString(DateTime date) {
+    if (date.year != 0) {
+      String monthString = getMonthName(date);
+      return "$monthString ${date.day.toString()}, ${date.year.toString()}";
+    } else {
+      return "Release date not announced";
+    }
+  }
+
+  String getMonthName(DateTime date) {
+    switch (date.month.toString()) {
+      case "1":
+        return "January";
+      case "2":
+        return "February";
+      case "3":
+        return "March";
+      case "4":
+        return "April";
+      case "5":
+        return "May";
+      case "6":
+        return "June";
+      case "7":
+        return "July";
+      case "8":
+        return "August";
+      case "9":
+        return "September";
+      case "10":
+        return "October";
+      case "11":
+        return "November";
+      case "12":
+        return "December";
+    }
+    return '';
   }
 }

@@ -13,7 +13,7 @@ void main() {
   final decodedJsonObject = jsonDecode(stringData);
 
   test('i can make a game object using createGameFromJson method', () {
-    Game game = gameCreator.parse(decodedJsonObject);
+    Game game = gameCreator.createGameFromJson(decodedJsonObject);
     expect(game.title, 'Minecraft');
   });
 }

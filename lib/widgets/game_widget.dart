@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
+import 'package:game_data/game_parser.dart';
 
 class GameWidget extends StatefulWidget {
   final Game game;
@@ -16,6 +17,8 @@ class GameWidget extends StatefulWidget {
 }
 
 class _GameWidgetState extends State<GameWidget> {
+  GameParser gameParser = GameParser();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -49,7 +52,8 @@ class _GameWidgetState extends State<GameWidget> {
                   height: 20,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0),
-                    child: Text(widget.game.releaseDateString),
+                    child: Text(gameParser
+                        .getGameReleaseDateString(widget.game.releaseDate)),
                   ),
                 ),
               ],
