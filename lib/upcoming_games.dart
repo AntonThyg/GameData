@@ -6,13 +6,6 @@ import 'game_parser.dart';
 
 class UpcomingGames {
   List<Game> upcomingGamesList = [];
-  final fetcher = UpcomingGamesListFetcher();
-
-  void generate() {
-    if (upcomingGamesList.isEmpty) {
-      upcomingGamesList = fetcher.fetchUpcomingGamesList();
-    }
-  }
 }
 
 class UpcomingGamesListFetcher {
@@ -40,24 +33,5 @@ class UpcomingGamesListFetcher {
       listOfGames.add(gameParser.parse(jsonData));
     }
     return listOfGames;
-  }
-
-  Future<void> makeUpcomingGameList() async {
-    final jsonDecoder = JsonDecoder();
-    final urlCreator = UrlCreator();
-    final upcomingGamesListFetcher = UpcomingGamesListFetcher();
-    final upcomingGamesUrl = urlCreator.createUpcomingGamesQueryUrl();
-
-    List upcomingSlugs = upcomingGamesListFetcher.createListOfSlugs(
-        await jsonDecoder.decodeJsonFromUrl(upcomingGamesUrl));
-
-    List<Game> upcomingGames =
-        await upcomingGamesListFetcher.createListOfGames(upcomingSlugs);
-    upcoming = upcomingGames;
-  }
-
-  List<Game> fetchUpcomingGamesList() {
-    makeUpcomingGameList();
-    return upcoming;
   }
 }

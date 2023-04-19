@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/favorite_games.dart';
-import 'package:game_data/upcoming_games.dart';
+import 'package:game_data/json_decoder.dart';
 import 'package:game_data/widgets/game_widget.dart';
 
 import '../game.dart';
+import '../upcoming_games.dart';
+import '../url_creator.dart';
 
 class UpcomingGameDataPage extends StatefulWidget {
-  final FavoriteGames favoritesList;
   final UpcomingGames upcomingGames;
+  final FavoriteGames favoriteGames;
 
-  const UpcomingGameDataPage(this.upcomingGames, this.favoritesList,
+  const UpcomingGameDataPage(this.upcomingGames, this.favoriteGames,
       {super.key});
 
   @override
@@ -18,9 +20,16 @@ class UpcomingGameDataPage extends StatefulWidget {
 
 class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
   @override
+  void initState() {
+    if (widget.upcomingGames.upcomingGamesList.isEmpty) {
+      makeUpcomingGameList();
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.upcomingGames.upcomingGamesList.isEmpty) {
-      widget.upcomingGames.generate();
       return Column(
         children: [
           Image.asset(
@@ -39,8 +48,8 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
                   game: g,
                   favoriteButton: ElevatedButton(
                     onPressed: () => setState(
-                        () => widget.favoritesList.setFavoriteState(g)),
-                    child: Icon(widget.favoritesList.isFavorited(g)
+                        () => widget.favoriteGames.setFavoriteState(g)),
+                    child: Icon(widget.favoriteGames.isFavorited(g)
                         ? Icons.thumb_up
                         : Icons.thumb_up_alt_outlined),
                   ),
@@ -50,5 +59,23 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
         ],
       );
     }
+  }
+
+  Future<void> makeUpcomingGameList() async {
+    final jsonDecoder = JsonDecoder();
+    final urlCreator = UrlCreator();
+    final upcomingGamesListFetcher = UpcomingGamesListFetcher();
+    final upcomingGamesUrl = urlCreator.createUpcomingGamesQueryUrl();
+
+    List upcomingSlugs = upcomingGamesListFetcher.createListOfSlugs(
+        await jsonDecoder.decodeJsonFromUrl(upcomingGamesUrl));
+
+    List<Game> upcomingGames =
+        await upcomingGamesListFetcher.createListOfGames(upcomingSlugs);
+    setState(
+      () {
+        widget.upcomingGames.upcomingGamesList = upcomingGames;
+      },
+    );
   }
 }
