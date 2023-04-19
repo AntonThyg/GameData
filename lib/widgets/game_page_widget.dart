@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../game.dart';
-import '../main.dart';
 
 class GamePage extends StatefulWidget {
   final Game game;
+  final ElevatedButton favoriteButton;
 
-  const GamePage(this.game, {super.key});
+  const GamePage(this.game, {required this.favoriteButton, super.key});
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -63,22 +64,9 @@ class _GamePageState extends State<GamePage> {
               widget.game.description,
             ),
           ),
-          ElevatedButton(
-            onPressed: () => setState(() => manageFavorited(widget.game)),
-            child: Icon(favoritesList.contains(widget.game)
-                ? Icons.thumb_up
-                : Icons.thumb_up_outlined),
-          )
+          widget.favoriteButton,
         ],
       ),
     );
-  }
-
-  void manageFavorited(Game g) {
-    if (favoritesList.contains(g)) {
-      favoritesList.remove(g);
-    } else {
-      favoritesList.add(g);
-    }
   }
 }

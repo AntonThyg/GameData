@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:game_data/widgets/cow_widget.dart';
-import 'package:game_data/widgets/favorites_page_widget.dart';
-import 'package:game_data/widgets/search_page_widget.dart';
-import 'package:game_data/widgets/upcoming_games_widget.dart';
 
 class PageRouter extends StatefulWidget {
-  const PageRouter({super.key});
+  final Widget favoritesPage, upcomingPage, searchPage;
+
+  const PageRouter(
+      {super.key,
+      required this.favoritesPage,
+      required this.upcomingPage,
+      required this.searchPage});
 
   @override
   State<PageRouter> createState() => _PageRouter();
@@ -26,13 +29,13 @@ class _PageRouter extends State<PageRouter> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = const UpcomingGameDataPage();
+        page = widget.upcomingPage;
         break;
       case 1:
-        page = const SearchPage();
+        page = widget.searchPage;
         break;
       case 2:
-        page = const FavoritesPage();
+        page = widget.favoritesPage;
         break;
       case 3:
         page = const CowWidget();
