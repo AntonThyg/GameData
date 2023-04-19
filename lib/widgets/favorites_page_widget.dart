@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:game_data/favorite_games.dart';
 import 'package:game_data/game.dart';
-import 'package:game_data/main.dart';
 
-import 'game_in_list_widget.dart';
+import 'game_widget.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({super.key});
+  final FavoriteGames favoriteList;
+
+  const FavoritesPage({super.key, required this.favoriteList});
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
@@ -16,31 +18,22 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        for (Game g in favoritesList)
+        for (Game g in widget.favoriteList.favoritesList.values)
           Row(
             children: [
-              GameInListWidget(g),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    setFavoritedState(g);
-                  });
-                },
-                child: Icon(favoritesList.contains(g)
-                    ? Icons.thumb_up
-                    : Icons.thumb_up_outlined),
+              GameWidget(
+                game: g,
+                favoriteButton: ElevatedButton(
+                  onPressed: () =>
+                      setState(() => widget.favoriteList.setFavoriteState(g)),
+                  child: Icon(widget.favoriteList.isFavorited(g)
+                      ? Icons.thumb_up
+                      : Icons.thumb_up_alt_outlined),
+                ),
               ),
             ],
           ),
       ],
     );
-  }
-
-  void setFavoritedState(Game g) {
-    if (favoritesList.contains(g)) {
-      favoritesList.remove(g);
-    } else {
-      favoritesList.add(g);
-    }
   }
 }

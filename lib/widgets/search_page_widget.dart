@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:game_data/favorite_games.dart';
 import 'package:game_data/game.dart';
-import 'package:game_data/main.dart';
+import 'package:game_data/game_parser.dart';
+import 'package:game_data/json_decoder.dart';
+import 'package:game_data/url_creator.dart';
 import 'package:game_data/widgets/game_page_widget.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  final FavoriteGames favoriteGames;
+
+  const SearchPage({super.key, required this.favoriteGames});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -45,13 +50,16 @@ class _SearchPageState extends State<SearchPage> {
         ],
       );
     } else {
-      Widget page = GamePage(game!);
+      Widget page = GamePage(game!, widget.favoriteGames);
       game = null;
       return page;
     }
   }
 
   Future<void> _searchForGame() async {
+    final urlCreator = UrlCreator();
+    final jsonDecoder = JsonDecoder();
+    final gameParser = GameParser();
     search = controller.text;
     String gameUrl = urlCreator.createSpecificQueryUrl(search);
     var jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
@@ -61,25 +69,8 @@ class _SearchPageState extends State<SearchPage> {
       jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
     }
 
-    bool gameIsFavorited = _checkIfGameIsFavorited(jsonData);
-
-    if (!gameIsFavorited) {
-      setState(() {
-        game = gameCreator.createGameFromJson(jsonData);
-      });
-    }
-  }
-
-  bool _checkIfGameIsFavorited(jsonData) {
-    bool gameIsFavorited = false;
-    for (Game g in favoritesList) {
-      if (jsonData["name"] == g.title) {
-        gameIsFavorited = true;
-        setState(() {
-          game = g;
-        });
-      }
-    }
-    return gameIsFavorited;
+    setState(() {
+      game = gameParser.parse(jsonData);
+    });
   }
 }

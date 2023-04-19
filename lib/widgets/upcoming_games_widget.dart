@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:game_data/main.dart';
-import 'package:game_data/widgets/game_in_list_widget.dart';
+import 'package:game_data/favorite_games.dart';
+import 'package:game_data/json_decoder.dart';
+import 'package:game_data/widgets/game_widget.dart';
 
 import '../game.dart';
+import '../upcoming_games.dart';
+import '../url_creator.dart';
 
 class UpcomingGameDataPage extends StatefulWidget {
-  const UpcomingGameDataPage({super.key});
+  final UpcomingGames upcomingGames;
+  final FavoriteGames favoriteGames;
+
+  const UpcomingGameDataPage(this.upcomingGames, this.favoriteGames,
+      {super.key});
 
   @override
   State<UpcomingGameDataPage> createState() => _UpcomingGameDataPageState();
@@ -14,7 +21,7 @@ class UpcomingGameDataPage extends StatefulWidget {
 class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
   @override
   void initState() {
-    if (upcomingGamesList.isEmpty) {
+    if (widget.upcomingGames.upcomingGamesList.isEmpty) {
       makeUpcomingGameList();
     }
     super.initState();
@@ -22,7 +29,7 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (upcomingGamesList.isEmpty) {
+    if (widget.upcomingGames.upcomingGamesList.isEmpty) {
       return Column(
         children: [
           Image.asset(
@@ -34,19 +41,18 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
     } else {
       return ListView(
         children: [
-          for (Game g in upcomingGamesList)
+          for (Game g in widget.upcomingGames.upcomingGamesList)
             Row(
               children: [
-                GameInListWidget(g),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      manageFavorited(g);
-                    });
-                  },
-                  child: Icon(favoritesList.contains(g)
-                      ? Icons.thumb_up
-                      : Icons.thumb_up_outlined),
+                GameWidget(
+                  game: g,
+                  favoriteButton: ElevatedButton(
+                    onPressed: () => setState(
+                        () => widget.favoriteGames.setFavoriteState(g)),
+                    child: Icon(widget.favoriteGames.isFavorited(g)
+                        ? Icons.thumb_up
+                        : Icons.thumb_up_alt_outlined),
+                  ),
                 ),
               ],
             ),
@@ -55,25 +61,20 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
     }
   }
 
-  void manageFavorited(Game g) {
-    if (favoritesList.contains(g)) {
-      favoritesList.remove(g);
-    } else {
-      favoritesList.add(g);
-    }
-  }
-
   Future<void> makeUpcomingGameList() async {
+    final jsonDecoder = JsonDecoder();
+    final urlCreator = UrlCreator();
+    final upcomingGamesListFetcher = UpcomingGamesListFetcher();
     final upcomingGamesUrl = urlCreator.createUpcomingGamesQueryUrl();
 
-    List upcomingSlugs = listCreator.createListOfSlugs(
+    List upcomingSlugs = upcomingGamesListFetcher.createListOfSlugs(
         await jsonDecoder.decodeJsonFromUrl(upcomingGamesUrl));
 
     List<Game> upcomingGames =
-        await listCreator.createListOfGames(upcomingSlugs);
+        await upcomingGamesListFetcher.createListOfGames(upcomingSlugs);
     setState(
       () {
-        upcomingGamesList = upcomingGames;
+        widget.upcomingGames.upcomingGamesList = upcomingGames;
       },
     );
   }
