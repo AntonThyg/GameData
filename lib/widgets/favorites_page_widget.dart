@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
 import 'package:game_data/main.dart';
 
-import 'game_widget.dart';
+import 'game_in_list_widget.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -19,7 +19,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         for (Game g in favoritesList)
           Row(
             children: [
-              GameWidget(g),
+              GameInListWidget(g),
               ElevatedButton(
                 onPressed: () {
                   setState(() {

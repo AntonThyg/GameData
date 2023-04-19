@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/main.dart';
-import 'package:game_data/widgets/game_widget.dart';
+import 'package:game_data/widgets/game_in_list_widget.dart';
 
 import '../game.dart';
 
@@ -37,7 +37,7 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
           for (Game g in upcomingGamesList)
             Row(
               children: [
-                GameWidget(g),
+                GameInListWidget(g),
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
