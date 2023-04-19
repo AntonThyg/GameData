@@ -47,6 +47,7 @@ class _GameInListWidgetState extends State<GameInListWidget> {
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Text(
                   gameParser.getGameReleaseDateString(widget.game.releaseDate),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ),
