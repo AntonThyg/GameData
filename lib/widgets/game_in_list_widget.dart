@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
+import 'package:game_data/game_parser.dart';
 
-class GameWidget extends StatefulWidget {
+class GameInListWidget extends StatefulWidget {
   Game game;
 
-  GameWidget(this.game, {super.key});
+  GameInListWidget(this.game, {super.key});
 
   @override
-  State<GameWidget> createState() => _GameWidgetState();
+  State<GameInListWidget> createState() => _GameInListWidgetState();
 }
 
-class _GameWidgetState extends State<GameWidget> {
+class _GameInListWidgetState extends State<GameInListWidget> {
+  GameParser gameParser = GameParser();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -42,7 +45,9 @@ class _GameWidgetState extends State<GameWidget> {
               height: 20,
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0),
-                child: Text(widget.game.releaseDateString),
+                child: Text(
+                  gameParser.getGameReleaseDateString(widget.game.releaseDate),
+                ),
               ),
             ),
           ],

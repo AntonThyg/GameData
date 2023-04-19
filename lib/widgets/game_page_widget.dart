@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_data/game_parser.dart';
 import '../game.dart';
 import '../main.dart';
 
@@ -12,6 +13,8 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+  GameParser gameParser = GameParser();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +42,7 @@ class _GamePageState extends State<GamePage> {
           ),
           SizedBox(
             child: Text(
-              widget.game.releaseDateString,
+              gameParser.getGameReleaseDateString(widget.game.releaseDate),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
             ),
