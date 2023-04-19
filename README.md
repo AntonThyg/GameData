@@ -20,7 +20,7 @@ Technologies Used:
 - Dart
 - Flutter
 - Rawg.io
-
+ 
 Contact
 - spencer.smith@bsu.edu
 - evan.greenfield@bsu.edu
