@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:game_data/game.dart';
 
 class GameWidget extends StatefulWidget {
-  Game game;
+  final Game game;
+  final ElevatedButton favoriteButton;
 
-  GameWidget(this.game, {super.key});
+  const GameWidget({
+    super.key,
+    required this.game,
+    required this.favoriteButton,
+  });
 
   @override
   State<GameWidget> createState() => _GameWidgetState();
