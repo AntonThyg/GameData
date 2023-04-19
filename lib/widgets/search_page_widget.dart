@@ -61,8 +61,25 @@ class _SearchPageState extends State<SearchPage> {
       jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
     }
 
-    setState(() {
-      game = gameCreator.createGameFromJson(jsonData);
-    });
+    bool gameIsFavorited = _checkIfGameIsFavorited(jsonData);
+
+    if (!gameIsFavorited) {
+      setState(() {
+        game = gameCreator.createGameFromJson(jsonData);
+      });
+    }
+  }
+
+  bool _checkIfGameIsFavorited(jsonData) {
+    bool gameIsFavorited = false;
+    for (Game g in favoritesList) {
+      if (jsonData["name"] == g.title) {
+        gameIsFavorited = true;
+        setState(() {
+          game = g;
+        });
+      }
+    }
+    return gameIsFavorited;
   }
 }
