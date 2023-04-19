@@ -2,9 +2,9 @@ class Game {
   final String title;
   final String description;
   final int rating;
-  final String releaseDateString;
+  final DateTime releaseDate;
   final String imageUrl;
 
-  Game(this.title, this.description, this.rating, this.releaseDateString,
+  Game(this.title, this.description, this.rating, this.releaseDate,
       this.imageUrl);
 }
