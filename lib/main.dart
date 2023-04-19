@@ -11,7 +11,7 @@ void main() {
   final favoriteGames = FavoriteGames();
   final upcomingGames = UpcomingGames();
 
-  final favoritesPage = FavoritesPage(favoriteGames: favoriteGames);
+  final favoritesPage = FavoritesPage(favoriteList: favoriteGames);
   final upcomingPage = UpcomingGameDataPage(upcomingGames, favoriteGames);
   final searchPage = SearchPage(
     favoriteGames: favoriteGames,

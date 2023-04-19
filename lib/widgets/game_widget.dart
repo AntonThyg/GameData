@@ -20,38 +20,43 @@ class _GameWidgetState extends State<GameWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: 300,
-          height: 300,
-          child: Image.network(widget.game.imageUrl),
-        ),
-        Column(
+        Row(
           children: [
             SizedBox(
-              width: 600,
-              height: 30,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Text(
-                  widget.game.title,
-                  style: const TextStyle(fontSize: 24),
+              width: 300,
+              height: 300,
+              child: Image.network(widget.game.imageUrl),
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  width: 600,
+                  height: 30,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text(
+                      widget.game.title,
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(
-              width: 200,
-              height: 10,
-            ),
-            SizedBox(
-              width: 600,
-              height: 20,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Text(widget.game.releaseDateString),
-              ),
-            ),
+                const SizedBox(
+                  width: 200,
+                  height: 10,
+                ),
+                SizedBox(
+                  width: 600,
+                  height: 20,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text(widget.game.releaseDateString),
+                  ),
+                ),
+              ],
+            )
           ],
-        )
+        ),
+        widget.favoriteButton
       ],
     );
   }

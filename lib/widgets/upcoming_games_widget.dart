@@ -37,7 +37,13 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
               children: [
                 GameWidget(
                   game: g,
-                  favoriteButton: widget.favoritesList.getFavoriteButton(g),
+                  favoriteButton: ElevatedButton(
+                    onPressed: () => setState(
+                        () => widget.favoritesList.setFavoriteState(g)),
+                    child: Icon(widget.favoritesList.isFavorited(g)
+                        ? Icons.thumb_up
+                        : Icons.thumb_up_alt_outlined),
+                  ),
                 ),
               ],
             ),

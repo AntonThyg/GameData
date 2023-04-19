@@ -50,10 +50,7 @@ class _SearchPageState extends State<SearchPage> {
         ],
       );
     } else {
-      Widget page = GamePage(
-        game!,
-        favoriteButton: widget.favoriteGames.getFavoriteButton(game!),
-      );
+      Widget page = GamePage(game!, widget.favoriteGames);
       game = null;
       return page;
     }
