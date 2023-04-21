@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/favorite_games.dart';
+import 'package:game_data/game_parser.dart';
 
 import '../game.dart';
 
@@ -20,6 +21,9 @@ class _GamePageState extends State<GamePage> {
       padding: const EdgeInsets.only(right: 8.0, top: 8.0, bottom: 8.0),
       child: ListView(
         children: [
+          ElevatedButton(
+              onPressed: () => {Navigator.pop(context)},
+              child: const Text("Back")),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: SizedBox(
@@ -41,7 +45,7 @@ class _GamePageState extends State<GamePage> {
           ),
           SizedBox(
             child: Text(
-              widget.game.releaseDate.toString(),
+              GameParser().getGameReleaseDateString(widget.game.releaseDate),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
             ),

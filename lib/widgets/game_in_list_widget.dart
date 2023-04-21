@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:game_data/favorite_games.dart';
 import 'package:game_data/game.dart';
 import 'package:game_data/game_parser.dart';
+import 'package:game_data/widgets/game_page_widget.dart';
 
 class GameWidget extends StatefulWidget {
   final Game game;
@@ -25,10 +27,17 @@ class _GameWidgetState extends State<GameWidget> {
       children: [
         Row(
           children: [
-            SizedBox(
-              width: 300,
-              height: 300,
-              child: Image.network(widget.game.imageUrl),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        GamePage(widget.game, FavoriteGames())));
+              },
+              child: SizedBox(
+                width: 300,
+                height: 300,
+                child: Image.network(widget.game.imageUrl),
+              ),
             ),
             Column(
               children: [
