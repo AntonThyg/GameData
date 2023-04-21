@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/favorite_games.dart';
 import 'package:game_data/json_decoder.dart';
-import 'package:game_data/widgets/game_widget.dart';
 
 import '../game.dart';
 import '../upcoming_games.dart';
 import '../url_creator.dart';
+import 'game_in_list_widget.dart';
 
 class UpcomingGameDataPage extends StatefulWidget {
   final UpcomingGames upcomingGames;
