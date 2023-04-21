@@ -20,32 +20,88 @@ class _SearchPageState extends State<SearchPage> {
 
   String search = "";
   Game? game;
+  String errorMessage = "";
 
   @override
   Widget build(BuildContext context) {
+    bool isSearchEnabled = controller.text.isNotEmpty;
+
     if (game == null) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Enter the text in the box below.'),
-          Row(
-            children: [
-              SizedBox(
-                width: 800,
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: controller,
-                  onSubmitted: (search) {
-                    _searchForGame();
-                  },
+          const Text(
+            'Enter a game title in the box below.',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            errorMessage,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.red,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Container(
+            width: 500,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextField(
+              textAlign: TextAlign.center,
+              controller: controller,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Enter game name',
+                hintStyle: TextStyle(
+                  color: Colors.grey[400],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    onPressed: () => _searchForGame(),
-                    child: const Text('Search')),
+              onChanged: (value) {
+                setState(() {
+                  isSearchEnabled = value.isNotEmpty;
+                });
+              },
+              onSubmitted:
+                  isSearchEnabled ? (search) => _searchForGame() : null,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: isSearchEnabled ? () => _searchForGame() : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 30,
               ),
-            ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: const Text(
+              'Search',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
           ),
         ],
       );
@@ -61,16 +117,23 @@ class _SearchPageState extends State<SearchPage> {
     final jsonDecoder = JsonDecoder();
     final gameParser = GameParser();
     search = controller.text;
+    search = search.replaceAll('/', '');
+    search = search.replaceAll('\\', '');
     String gameUrl = urlCreator.createSpecificQueryUrl(search.toLowerCase());
     var jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
-
-    if (jsonData['redirect'] == true) {
-      gameUrl = urlCreator.createSpecificQueryUrl(jsonData['slug']);
-      jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
+    if (jsonData['detail'] == 'Not found.') {
+      setState(() {
+        errorMessage = 'Could not find game "$search"';
+      });
+    } else {
+      if (jsonData['redirect'] == true) {
+        gameUrl = urlCreator.createSpecificQueryUrl(jsonData['slug']);
+        jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
+      }
+      setState(() {
+        errorMessage = '';
+        game = gameParser.createGameFromJson(jsonData);
+      });
     }
-
-    setState(() {
-      game = gameParser.createGameFromJson(jsonData);
-    });
   }
 }
