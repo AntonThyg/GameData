@@ -30,7 +30,7 @@ class UpcomingGamesListFetcher {
     for (int i = 0; i < listOfSlugs.length; i++) {
       String url = urlCreator.createSpecificQueryUrl(listOfSlugs[i]);
       final jsonData = await jsonDecoder.decodeJsonFromUrl(url);
-      listOfGames.add(gameParser.parse(jsonData));
+      listOfGames.add(gameParser.createGameFromJson(jsonData));
     }
     return listOfGames;
   }

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'game.dart';
 
 class GameParser {
-  Game parse(final jsonData) {
+  Game createGameFromJson(final jsonData) {
     String name = jsonData["name"];
     String description = getGameDescription(jsonData);
     int rating = getGameRating(jsonData);
