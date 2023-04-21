@@ -61,7 +61,7 @@ class _SearchPageState extends State<SearchPage> {
     final jsonDecoder = JsonDecoder();
     final gameParser = GameParser();
     search = controller.text;
-    String gameUrl = urlCreator.createSpecificQueryUrl(search);
+    String gameUrl = urlCreator.createSpecificQueryUrl(search.toLowerCase());
     var jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
 
     if (jsonData['redirect'] == true) {
