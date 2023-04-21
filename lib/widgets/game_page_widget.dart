@@ -42,22 +42,35 @@ class _GamePageState extends State<GamePage> {
             ),
           ),
           const SizedBox(height: 24),
+          //title
           SizedBox(
             child: Text(
               widget.game.title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 48,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                decoration: TextDecoration.none,
+              ),
             ),
           ),
           const SizedBox(height: 16),
+          //release date
           SizedBox(
             child: Text(
               GameParser().getGameReleaseDateString(widget.game.releaseDate),
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 24),
+              style: const TextStyle(
+                fontSize: 24,
+                color: Colors.black,
+                fontWeight: FontWeight.normal,
+                decoration: TextDecoration.none,
+              ),
             ),
           ),
           const SizedBox(height: 16),
+          //game rating
           SizedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -66,17 +79,28 @@ class _GamePageState extends State<GamePage> {
                 const SizedBox(width: 8),
                 Text(
                   '${widget.game.rating}/100',
-                  style: const TextStyle(fontSize: 20),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    decoration: TextDecoration.none,
+                  ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 32),
+          //game description
           SizedBox(
             width: double.infinity,
             child: Text(
               widget.game.description,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.normal,
+                decoration: TextDecoration.none,
+              ),
             ),
           ),
           const SizedBox(height: 32),
