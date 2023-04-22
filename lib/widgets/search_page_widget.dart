@@ -106,9 +106,8 @@ class _SearchPageState extends State<SearchPage> {
         ],
       );
     } else {
-      Widget page = GamePage(game!, widget.favoriteGames);
       game = null;
-      return page;
+      return SearchPage(favoriteGames: widget.favoriteGames);
     }
   }
 
@@ -134,6 +133,14 @@ class _SearchPageState extends State<SearchPage> {
         errorMessage = '';
         game = gameParser.createGameFromJson(jsonData);
       });
+    }
+    if (game == null && mounted) {
+      setState(() {
+        errorMessage = 'Could not find game "$search"';
+      });
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => GamePage(game!, widget.favoriteGames)));
     }
   }
 }
