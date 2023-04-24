@@ -7,11 +7,13 @@ import 'package:game_data/widgets/game_page_widget.dart';
 class GameWidget extends StatefulWidget {
   final Game game;
   final ElevatedButton favoriteButton;
+  final FavoriteGames favoriteGames;
 
   const GameWidget({
     super.key,
     required this.game,
     required this.favoriteButton,
+    required this.favoriteGames,
   });
 
   @override
@@ -31,7 +33,7 @@ class _GameWidgetState extends State<GameWidget> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                        GamePage(widget.game, FavoriteGames())));
+                        GamePage(widget.game, widget.favoriteGames)));
               },
               child: SizedBox(
                 width: 300,
@@ -69,7 +71,7 @@ class _GameWidgetState extends State<GameWidget> {
             )
           ],
         ),
-        widget.favoriteButton
+        widget.favoriteButton,
       ],
     );
   }

@@ -30,6 +30,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       ? Icons.thumb_up
                       : Icons.thumb_up_alt_outlined),
                 ),
+                favoriteGames: FavoriteGames(),
               ),
             ],
           ),

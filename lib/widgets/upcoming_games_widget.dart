@@ -53,6 +53,7 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
                         ? Icons.thumb_up
                         : Icons.thumb_up_alt_outlined),
                   ),
+                  favoriteGames: FavoriteGames(),
                 ),
               ],
             ),

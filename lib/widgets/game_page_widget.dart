@@ -127,8 +127,8 @@ class _GamePageState extends State<GamePage> {
                   const SizedBox(width: 8),
                   Text(
                     widget.favoriteGames.isFavorited(widget.game)
-                        ? 'Liked'
-                        : 'Like',
+                        ? 'Favorited'
+                        : 'Favorite',
                     style: const TextStyle(fontSize: 20),
                   ),
                 ],
