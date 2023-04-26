@@ -7,8 +7,10 @@ import '../game.dart';
 class GamePage extends StatefulWidget {
   final Game game;
   final FavoriteGames favoriteGames;
+  final ElevatedButton? favoriteButton;
 
-  const GamePage(this.game, this.favoriteGames, {super.key});
+  const GamePage(this.game, this.favoriteGames,
+      {super.key, this.favoriteButton});
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -17,6 +19,35 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
+    final favoriteButton = ElevatedButton(
+      onPressed: () => setState(
+        () => widget.favoriteGames.setFavoriteState(widget.game),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            widget.favoriteGames.isFavorited(widget.game)
+                ? Icons.thumb_up
+                : Icons.thumb_up_alt_outlined,
+            size: 24,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            widget.favoriteGames.isFavorited(widget.game)
+                ? 'Favorited'
+                : 'Favorite',
+            style: const TextStyle(fontSize: 20),
+          ),
+        ],
+      ),
+    );
+
     return Container(
       color: Colors.white,
       child: Padding(
@@ -106,34 +137,9 @@ class _GamePageState extends State<GamePage> {
               ),
             ),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () => setState(
-                () => widget.favoriteGames.setFavoriteState(widget.game),
-              ),
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    widget.favoriteGames.isFavorited(widget.game)
-                        ? Icons.thumb_up
-                        : Icons.thumb_up_alt_outlined,
-                    size: 24,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    widget.favoriteGames.isFavorited(widget.game)
-                        ? 'Favorited'
-                        : 'Favorite',
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
+            widget.favoriteButton == null
+                ? favoriteButton
+                : widget.favoriteButton!
           ],
         ),
       ),
