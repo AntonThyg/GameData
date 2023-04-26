@@ -65,7 +65,7 @@ class _GamePageState extends State<GamePage> {
             ),
             const SizedBox(height: 24),
             SizedBox(
-              height: 400,
+              height: 450,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.network(

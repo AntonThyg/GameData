@@ -116,8 +116,7 @@ class _SearchPageState extends State<SearchPage> {
     final jsonDecoder = JsonDecoder();
     final gameParser = GameParser();
     search = controller.text;
-    search = search.replaceAll('/', '');
-    search = search.replaceAll('\\', '');
+    search = search.replaceAll('/', '').replaceAll('\\', '');
     String gameUrl = urlCreator.createSpecificQueryUrl(search.toLowerCase());
     var jsonData = await jsonDecoder.decodeJsonFromUrl(gameUrl);
     if (jsonData['detail'] == 'Not found.') {

@@ -74,7 +74,14 @@ class _GameWidgetState extends State<GameWidget> {
 
   //use navigator to display a game page widget
   void displayGamePage(Game game) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => GamePage(widget.game, FavoriteGames())));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => GamePage(
+          widget.game,
+          widget.favoriteGames,
+          favoriteButton: widget.favoriteButton,
+        ),
+      ),
+    );
   }
 }
