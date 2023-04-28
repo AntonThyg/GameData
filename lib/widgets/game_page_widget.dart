@@ -142,9 +142,7 @@ class _GamePageState extends State<GamePage> {
               ),
             ),
             const SizedBox(height: 32),
-            widget.favoriteButton == null
-                ? favoriteButton
-                : widget.favoriteButton!
+            if (widget.favoriteButton == null) favoriteButton,
           ],
         ),
       ),
