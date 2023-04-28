@@ -52,7 +52,7 @@ class GameParser {
 
     gameDescription = Bidi.stripHtmlIfNeeded(gameDescription);
 
-    return (gameDescription);
+    return gameDescription;
   }
 
   String getGameReleaseDateString(DateTime date) {

@@ -27,52 +27,61 @@ class _GameWidgetState extends State<GameWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        GamePage(widget.game, widget.favoriteGames)));
-              },
-              child: SizedBox(
+        GestureDetector(
+          onTap: () => displayGamePage(widget.game),
+          child: Row(
+            children: [
+              SizedBox(
                 width: 300,
                 height: 300,
                 child: Image.network(widget.game.imageUrl),
               ),
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  width: 600,
-                  height: 30,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Text(
-                      widget.game.title,
-                      style: const TextStyle(fontSize: 24),
+              Column(
+                children: [
+                  SizedBox(
+                    width: 600,
+                    height: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: Text(
+                        widget.game.title,
+                        style: const TextStyle(fontSize: 24),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 200,
-                  height: 10,
-                ),
-                SizedBox(
-                  width: 600,
-                  height: 20,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Text(gameParser
-                        .getGameReleaseDateString(widget.game.releaseDate)),
+                  const SizedBox(
+                    width: 200,
+                    height: 10,
                   ),
-                ),
-              ],
-            )
-          ],
+                  SizedBox(
+                    width: 600,
+                    height: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: Text(gameParser
+                          .getGameReleaseDateString(widget.game.releaseDate)),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
         widget.favoriteButton,
       ],
+    );
+  }
+
+  //use navigator to display a game page widget
+  void displayGamePage(Game game) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => GamePage(
+          widget.game,
+          widget.favoriteGames,
+          favoriteButton: widget.favoriteButton,
+        ),
+      ),
     );
   }
 }

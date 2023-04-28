@@ -5,9 +5,11 @@ class CowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           'images/cow.jpg',
+          scale: .5,
         ),
       ],
     );

@@ -81,6 +81,11 @@ class _PageRouter extends State<PageRouter> {
                   ),
                 ),
               ),
+              const VerticalDivider(
+                thickness: 1,
+                width: 1,
+                color: Colors.black,
+              ),
               Expanded(
                 child: Container(
                   color: Colors.white60,

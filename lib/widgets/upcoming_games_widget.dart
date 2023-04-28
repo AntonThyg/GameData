@@ -39,25 +39,36 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
         ],
       );
     } else {
-      return ListView(
-        children: [
-          for (Game g in widget.upcomingGames.upcomingGamesList)
-            Row(
-              children: [
-                GameWidget(
-                  game: g,
-                  favoriteButton: ElevatedButton(
-                    onPressed: () => setState(
-                        () => widget.favoriteGames.setFavoriteState(g)),
-                    child: Icon(widget.favoriteGames.isFavorited(g)
-                        ? Icons.thumb_up
-                        : Icons.thumb_up_alt_outlined),
-                  ),
-                  favoriteGames: FavoriteGames(),
-                ),
-              ],
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ListView(
+          children: [
+            AppBar(
+              title: const Text("Upcoming Games"),
+              titleTextStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+              backgroundColor: Colors.lightBlue,
             ),
-        ],
+            for (Game g in widget.upcomingGames.upcomingGamesList)
+              Row(
+                children: [
+                  GameWidget(
+                    game: g,
+                    favoriteButton: ElevatedButton(
+                      onPressed: () => setState(
+                          () => widget.favoriteGames.setFavoriteState(g)),
+                      child: Icon(widget.favoriteGames.isFavorited(g)
+                          ? Icons.thumb_up
+                          : Icons.thumb_up_alt_outlined),
+                    ),
+                    favoriteGames: FavoriteGames(),
+                  ),
+                ],
+              ),
+          ],
+        ),
       );
     }
   }
