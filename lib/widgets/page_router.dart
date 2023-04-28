@@ -4,20 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:game_data/widgets/cow_widget.dart';
 
 class PageRouter extends StatefulWidget {
-  final Widget homePage,
-      favoritesPage,
-      upcomingPage,
-      recommendedPage,
-      searchPage;
+  final Widget homePage, favoritesPage, upcomingPage, searchPage;
 
-  const PageRouter(
-      {Key? key,
-      required this.homePage,
-      required this.favoritesPage,
-      required this.upcomingPage,
-      required this.searchPage,
-      required this.recommendedPage})
-      : super(key: key);
+  const PageRouter({
+    Key? key,
+    required this.homePage,
+    required this.favoritesPage,
+    required this.upcomingPage,
+    required this.searchPage,
+  }) : super(key: key);
 
   @override
   State<PageRouter> createState() => PageRouterState();
