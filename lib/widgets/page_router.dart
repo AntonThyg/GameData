@@ -4,40 +4,49 @@ import 'package:flutter/material.dart';
 import 'package:game_data/widgets/cow_widget.dart';
 
 class PageRouter extends StatefulWidget {
-  final Widget favoritesPage, upcomingPage, searchPage;
+  final Widget homePage, favoritesPage, upcomingPage, searchPage;
 
   const PageRouter(
-      {super.key,
+      {Key? key,
+      required this.homePage,
       required this.favoritesPage,
       required this.upcomingPage,
-      required this.searchPage});
+      required this.searchPage})
+      : super(key: key);
 
   @override
-  State<PageRouter> createState() => _PageRouter();
+  State<PageRouter> createState() => PageRouterState();
 }
 
-class _PageRouter extends State<PageRouter> {
-  bool ignoring = true;
+class PageRouterState extends State<PageRouter> {
+  bool ignoring = false;
+  bool hasWaited = false;
   var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 6), () {
-      _setIgnoringState();
-    });
-
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = widget.upcomingPage;
+        page = widget.homePage;
         break;
       case 1:
-        page = widget.searchPage;
+        page = widget.upcomingPage;
+        if (!hasWaited) {
+          hasWaited = true;
+          ignoring = true;
+          Timer(const Duration(seconds: 6), () {
+            _setIgnoringState();
+          });
+        }
         break;
       case 2:
-        page = widget.favoritesPage;
+        page = widget.searchPage;
         break;
       case 3:
+        page = widget.favoritesPage;
+        break;
+      case 4:
         page = const CowWidget();
         break;
       default:
@@ -55,6 +64,10 @@ class _PageRouter extends State<PageRouter> {
                   child: NavigationRail(
                     extended: constraints.maxWidth >= 600,
                     destinations: const [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.home),
+                        label: Text('Home'),
+                      ),
                       NavigationRailDestination(
                         icon: Icon(Icons.watch_later_outlined),
                         label: Text('Upcoming'),
@@ -102,6 +115,12 @@ class _PageRouter extends State<PageRouter> {
   void _setIgnoringState() {
     setState(() {
       ignoring = false;
+    });
+  }
+
+  void changePageIndex(int i) {
+    setState(() {
+      selectedIndex = i;
     });
   }
 }
