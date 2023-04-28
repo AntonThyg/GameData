@@ -22,6 +22,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         children: [
           AppBar(
             title: const Text("Favorited Games"),
+            centerTitle: true,
             titleTextStyle: const TextStyle(
               color: Colors.white,
               fontSize: 20,

@@ -45,6 +45,7 @@ class _UpcomingGameDataPageState extends State<UpcomingGameDataPage> {
           children: [
             AppBar(
               title: const Text("Upcoming Games"),
+              centerTitle: true,
               titleTextStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,

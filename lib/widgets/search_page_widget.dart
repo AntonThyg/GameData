@@ -34,6 +34,7 @@ class _SearchPageState extends State<SearchPage> {
             padding: const EdgeInsets.all(4.0),
             child: AppBar(
               title: const Text("Search Page"),
+              centerTitle: true,
               titleTextStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
