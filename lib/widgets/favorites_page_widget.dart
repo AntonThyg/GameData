@@ -16,25 +16,36 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        for (Game g in widget.favoriteList.favoritesList.values)
-          Row(
-            children: [
-              GameWidget(
-                game: g,
-                favoriteButton: ElevatedButton(
-                  onPressed: () =>
-                      setState(() => widget.favoriteList.setFavoriteState(g)),
-                  child: Icon(widget.favoriteList.isFavorited(g)
-                      ? Icons.thumb_up
-                      : Icons.thumb_up_alt_outlined),
-                ),
-                favoriteGames: FavoriteGames(),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: ListView(
+        children: [
+          AppBar(
+            title: const Text("Favorited Games"),
+            titleTextStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+            backgroundColor: Colors.orange,
           ),
-      ],
+          for (Game g in widget.favoriteList.favoritesList.values)
+            Row(
+              children: [
+                GameWidget(
+                  game: g,
+                  favoriteButton: ElevatedButton(
+                    onPressed: () =>
+                        setState(() => widget.favoriteList.setFavoriteState(g)),
+                    child: Icon(widget.favoriteList.isFavorited(g)
+                        ? Icons.thumb_up
+                        : Icons.thumb_up_alt_outlined),
+                  ),
+                  favoriteGames: FavoriteGames(),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 }

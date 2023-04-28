@@ -28,8 +28,22 @@ class _SearchPageState extends State<SearchPage> {
 
     if (game == null) {
       return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: AppBar(
+              title: const Text("Search Page"),
+              titleTextStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+              backgroundColor: Colors.lightGreen,
+            ),
+          ),
+          const SizedBox(
+            height: 150,
+          ),
           const Text(
             'Enter a game title in the box below.',
             style: TextStyle(
@@ -48,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Container(
             width: 500,
             decoration: BoxDecoration(
@@ -86,7 +100,7 @@ class _SearchPageState extends State<SearchPage> {
           ElevatedButton(
             onPressed: isSearchEnabled ? () => _searchForGame() : null,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.lightGreen,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(
                 vertical: 15,

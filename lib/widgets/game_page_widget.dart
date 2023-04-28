@@ -60,8 +60,12 @@ class _GamePageState extends State<GamePage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
+                backgroundColor: Colors.blueGrey,
               ),
-              child: const Text("Back"),
+              child: const Text(
+                "Back",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             const SizedBox(height: 24),
             SizedBox(
@@ -133,6 +137,7 @@ class _GamePageState extends State<GamePage> {
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
                   decoration: TextDecoration.none,
+                  fontFamily: 'Arial',
                 ),
               ),
             ),
