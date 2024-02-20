@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_data/favorite_games.dart';
 import 'package:game_data/game.dart';
-
 import 'game_in_list_widget.dart';
 
 class FavoritesPage extends StatefulWidget {
